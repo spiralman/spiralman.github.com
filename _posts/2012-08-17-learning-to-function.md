@@ -16,9 +16,9 @@ often won't be in the same directory as the file you're editing.
 
 It seemed like a simple enough problem to search "up" from the current
 directory to find the first Solution file, and then pass that in to
-MSBuild. Before I started, though, I wanted to try to write it as
-"functionally" as possible (i.e. by not declaring any variables). My
-first attempt looked something like this:
+MSBuild. One of the rules I set up for myself, though, was to try to
+write it as "functionally" as possible (i.e. by not declaring any
+variables). My first attempt looked something like this:
 
 	(defun find-solution (dir)
 		(if (directory-files dir nil "\.sln$")
@@ -109,3 +109,10 @@ rid of is the repeated call to `expand-file-name`. Lets see if
 		)
 	)
 
+It feels a little dirty to be using delq and mapcar on something that
+isn't naturally a list (a single string; note that I have to
+explicitly create the list), but maybe that's just my unfamiliarity
+with the language. They did name it Lisp for a reason.
+
+Since this is my first time out with Lisp, let me know if you can
+think of a better way to do this. I'd love to hear about it!
