@@ -20,14 +20,16 @@ MSBuild. One of the rules I set up for myself, though, was to try to
 write it as "functionally" as possible (i.e. by not declaring any
 variables). My first attempt looked something like this:
 
-	(defun find-solution (dir)
-		(if (directory-files dir nil "\.sln$")
-			dir
-			(if (not (equal dir (expand-file-name ".." dir)))
-				(find-solution (expand-file-name ".." dir))
-				)
-			)
-		)
+{% highlight cl %}
+(defun find-solution (dir)
+  (if (directory-files dir nil "\.sln$")
+      dir
+    (if (not (equal dir (expand-file-name ".." dir)))
+	(find-solution (expand-file-name ".." dir))
+      )
+    )
+  )
+{% endhighlight %}
 
 Which returns the directory containing the file, but not the solution
 file itself. That if statement is also pretty ugly and isn't very DRY,
@@ -36,31 +38,35 @@ since it's repeating `expand-file-name`.
 First thing's first is to get the directory and the file. If I was
 writing it in Python, it would look something like:
 
-	match_files = ... # filter with some lambda in it
-	if match_files is not None:
-		return os.path.join(dir, match_files[0])
-	else:
-		find_solution(..)
-		
+{% highlight python %}
+match_files = ... # filter with some lambda in it
+if match_files is not None:
+	return os.path.join(dir, match_files[0])
+else:
+	find_solution(..)
+{% endhighlight %}
+
 Which, despite having the word "lambda" in it, isn't very functional
 (it has a variable in it!) To get around that, I cheated and decided
 to push that logic to a function:
 
-	(defun file-if-exists (file dir)
-		(if file
-			(expand-file-name file dir)
-			nil
-			)
-		)
-		
-	(defun find-solution (dir)
-		(or
-			(file-if-exists (car (directory-files dir nil "\.sln$")) dir)
-			(if (not (equal dir (expand-file-name ".." dir)))
-				(find-solution (expand-file-name ".." dir))
-				)
-			)
-		)
+{% highlight cl %}
+(defun file-if-exists (file dir)
+  (if file
+      (expand-file-name file dir)
+    nil
+    )
+  )
+
+(defun find-solution (dir)
+  (or
+   (file-if-exists (car (directory-files dir nil "\.sln$")) dir)
+   (if (not (equal dir (expand-file-name ".." dir)))
+       (find-solution (expand-file-name ".." dir))
+     )
+   )
+  )
+{% endhighlight %}
 		
 Looking at the implementation of `file-if-exists`, it seemed like a
 pretty useful operation. I Googled around for a standard
@@ -77,37 +83,41 @@ Of course! I use `map` all the time in Python and C# (where it goes by
 the SQLish `Select`), and it even comes from the functional language
 world. Here it is again, with the map: 
 		
-	(defun find-solution (dir)
-		"Search up the tree until you find a .sln file"
-		(or 
-			(car (mapcar (lambda (file)
-				(expand-file-name file dir))
-				(directory-files dir nil "\.sln$")))
-			(if (not (equal dir (expand-file-name ".." dir)))
-				(find-solution (expand-file-name ".." dir)
-					)
-				)
-			)
-		)
+{% highlight cl %}
+(defun find-solution (dir)
+  "Search up the tree until you find a .sln file"
+  (or 
+   (car (mapcar (lambda (file)
+		  (expand-file-name file dir))
+		(directory-files dir nil "\.sln$")))
+   (if (not (equal dir (expand-file-name ".." dir)))
+       (find-solution (expand-file-name ".." dir)
+		      )
+     )
+   )
+  )
+{% endhighlight %}
 
 Now there's only that if statement left, but what I really want to get
 rid of is the repeated call to `expand-file-name`. Lets see if
 `mapcar` can save us again:
 
-	(defun find-solution (dir)
-		"Search up the tree until you find a .sln file"
-		(car
-			(or 
-				(mapcar (lambda (file)
-					(expand-file-name file dir))
-					(directory-files dir nil "\.sln$"))
-				(mapcar (lambda (upper)
-					(find-solution upper))
-					(delq dir (list (expand-file-name ".." dir)))
-				)
-			)
-		)
-	)
+{% highlight cl %}
+(defun find-solution (dir)
+  "Search up the tree until you find a .sln file"
+  (car
+   (or 
+    (mapcar (lambda (file)
+	      (expand-file-name file dir))
+	    (directory-files dir nil "\.sln$"))
+    (mapcar (lambda (upper)
+	      (find-solution upper))
+	    (delq dir (list (expand-file-name ".." dir)))
+	    )
+    )
+   )
+  )
+{% endhighlight %}
 
 It feels a little dirty to be using delq and mapcar on something that
 isn't naturally a list (a single string; note that I have to
