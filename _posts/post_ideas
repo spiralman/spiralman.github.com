@@ -1,0 +1,17 @@
+Icon Fonts
+* Scaling and color
+* Designing in Inkscape
+* Fontforge for creation
+* Scripting
+
+High-resolution Screens
+* Scaling images
+* Fonts (combine with above?)
+* Multiplying CSS sizes
+
+Dynamic Languages
+* Asking the right questions
+** Type vs has property
+* Static typing is a lie
+* Downcasting in static languages
+
