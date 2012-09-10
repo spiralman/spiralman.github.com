@@ -4,11 +4,6 @@ Icon Fonts
 * Fontforge for creation
 * Scripting
 
-High-resolution Screens
-* Scaling images
-* Fonts (combine with above?)
-* Multiplying CSS sizes
-
 Dynamic Languages
 * Asking the right questions
 ** Type vs has property
@@ -21,6 +16,12 @@ The making and the product
 ** Why should it be any less interesting?
 ** New tools/ideas
 * 
+
+Front End Unit Testing
+* Should we?
+* Fragility
+* Catching useful failures
+* descriptive?
 
 Tumblr in Germany
 * Can't change language
