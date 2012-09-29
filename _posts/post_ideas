@@ -1,3 +1,20 @@
+CSS Layouts
+* Content vs Widget layouts
+* Sibling-relative layouts
+* Grid Layouts
+** Same idea
+** Bootstrap, etc too large-grained
+* Fake it in JS
+** Slow?
+** Mobile responsiveness (built-in to browser)
+
+App themes
+* Differentiation
+* Desktop is ugly
+** Because you see multiple apps at once
+* Mobile is nice
+** Because you only see one app at a time
+
 Icon Fonts
 * Scaling and color
 * Designing in Inkscape
