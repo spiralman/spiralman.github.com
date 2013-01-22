@@ -8,8 +8,27 @@
 
 (show-paren-mode 1)
 
+;; (icy-mode 1)
+
 ;; Mac/homebrew only?
 (setq-default ispell-program-name "/usr/local/bin/aspell")
+
+;; Point it straight at homebrew-installed Exuberant ctags
+(setq path-to-ctags "/usr/local/bin/ctags")
+
+(defun create-tags (dir-name)
+  "Create tags file"
+  (interactive "DDirectory: ")
+  (shell-command
+   (format "%s -f %s/TAGS -e -R %s" path-to-ctags dir-name 
+           (directory-file-name dir-name)))
+  )
+
+;; minor modes used in *any* major mode
+(add-hook 'after-change-major-mode-hook
+	  (lambda ()
+	    (highlight-80+-mode)
+	    ))
 
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
