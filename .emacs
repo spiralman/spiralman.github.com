@@ -8,6 +8,8 @@
 
 (show-paren-mode 1)
 
+(setq exec-path (append exec-path '("~/bin")))
+
 ;; (icy-mode 1)
 
 ;; Mac/homebrew only?
@@ -30,6 +32,19 @@
 	    (highlight-80+-mode)
 	    ))
 
+(when (load "flymake" t)
+  (defun flymake-pycheck-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+		      'flymake-create-temp-inplace))
+	   (local-file (file-relative-name
+			temp-file
+			(file-name-directory buffer-file-name))))
+      (list "pycheckers" (list local-file))))
+  
+  (add-to-list 'flymake-allowed-file-name-masks
+	       '("\\.py\\'" flymake-pycheck-init))
+  )
+
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
 (setq auto-mode-alist
@@ -39,6 +54,10 @@
 		  )
 	    )
       )
+
+(add-hook 'python-mode-hook
+	  '(lambda ()
+	     (flymake-mode)))
 
 ;; requires coffee-mode
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
