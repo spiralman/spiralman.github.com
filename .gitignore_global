@@ -1,0 +1,32 @@
+# Don't forget git config --global core.excludesfile ~/.gitignore_global
+
+# Emacs Stuff
+##########
+*~
+\#*\
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive#
+
+# OS X Stuff
+##########
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
