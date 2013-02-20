@@ -8,7 +8,7 @@
 
 (show-paren-mode 1)
 
-(setq exec-path (append exec-path '("~/bin")))
+(setq exec-path (append exec-path '("~/bin" "/usr/local/bin")))
 
 ;; (icy-mode 1)
 
@@ -42,9 +42,20 @@
 			temp-file
 			(file-name-directory buffer-file-name))))
       (list "pycheckers" (list local-file))))
+
+  (defun flymake-jsl-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+		       'flymake-create-temp-inplace))
+	   (local-file (file-relative-name
+			temp-file
+			(file-name-directory buffer-file-name))))
+      (list "jsl" (list "-process" local-file))))
   
   (add-to-list 'flymake-allowed-file-name-masks
 	       '("\\.py\\'" flymake-pycheck-init))
+
+  (add-to-list 'flymake-allowed-file-name-masks
+	       '("\\.js\\'" flymake-jsl-init))
   )
 
 (autoload 'markdown-mode "markdown-mode.el"
@@ -59,6 +70,8 @@
 
 (add-hook 'python-mode-hook
 	  '(lambda ()
+       (local-set-key (kbd "C-<") 'python-shift-left)
+       (local-set-key (kbd "C->") 'python-shift-right)
 	     (flymake-mode)))
 
 ;; requires coffee-mode
@@ -75,7 +88,9 @@
 
 (add-hook 'js2-mode-hook
 	  (lambda ()
-	    (setq js2-basic-offset 2)))
+	    (setq js2-basic-offset 2)
+      (set-variable 'indent-tabs-mode nil)
+      (flymake-mode)))
 
 (setq indent-tabs-mode nil)
 (setq tab-width 2)
