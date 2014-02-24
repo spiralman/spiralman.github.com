@@ -1,9 +1,9 @@
 (require 'package)
 (package-initialize)
 
-(add-to-list 'package-archives 
+(add-to-list 'package-archives
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives 
+(add-to-list 'package-archives
 	     '("melpa" . "http://melpa.milkbox.net/packages/"))
 
 (show-paren-mode 1)
@@ -22,7 +22,7 @@
   "Create tags file"
   (interactive "DDirectory: ")
   (shell-command
-   (format "%s -f %s/TAGS -e -R %s" path-to-ctags dir-name 
+   (format "%s -f %s/TAGS -e -R %s" path-to-ctags dir-name
            (directory-file-name dir-name)))
   )
 
@@ -50,7 +50,7 @@
 			temp-file
 			(file-name-directory buffer-file-name))))
       (list "jsl" (list "-process" local-file))))
-  
+
   (add-to-list 'flymake-allowed-file-name-masks
 	       '("\\.py\\'" flymake-pycheck-init))
 
@@ -61,8 +61,8 @@
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
 (setq auto-mode-alist
-      (cons '("\\.[Mm]arkdown" . markdown-mode) 
-	    (cons '("\\.md" . markdown-mode) 
+      (cons '("\\.[Mm]arkdown" . markdown-mode)
+	    (cons '("\\.md" . markdown-mode)
 		  auto-mode-alist
 		  )
 	    )
@@ -101,3 +101,22 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ispell-local-dictionary "en"))
+
+(defun replace-random (to-replace)
+  (interactive "MTo Replace: ")
+  (while (re-search-forward to-replace nil t)
+    (replace-match
+     (concat
+      "\\1"
+      (mapconcat
+       (lambda (x)
+	 (apply #'string
+		(list (aref "abcdefghijklmnopqrstuvwxyz" (random 26)))))
+       (number-sequence 1 8)
+       ""
+       )
+      "\\2"
+      )
+     )
+    )
+  )
