@@ -25,14 +25,14 @@ a complicated procedure and break it up into higher-order operations,
 it will be easier for somebody skimming the code to get the gist of
 what the function does:
 
-```python
+{% highlight python %}
 def activate_crm114(code):
     enter_code(code)
 
     test_self_destruct()
 
     enter_all_receiver_circuits()
-```
+{% endhighlight %}
 
 If you don't care about the details, this code is pretty
 straight-forward. The argument *against* this is that, if you *do*
@@ -82,7 +82,7 @@ If the functions are broken out, as they are above, and they start
 operating on the same variables, then you'll have to pass those
 variables around to the individual functions:
 
-```python
+{% highlight python %}
 def activate_crm114(code):
     interface = PanelInterface()
 	
@@ -91,7 +91,7 @@ def activate_crm114(code):
     test_result = test_self_destruct(interface, activation_token)
 
     enter_all_receiver_circuits(interface, activation_token, test_result)
-```
+{% endhighlight %}
 
 Having to pass all those variables around can start to feel very
 cumbersome very fast, so it's easier to see when you need to start
