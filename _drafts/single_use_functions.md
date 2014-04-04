@@ -85,7 +85,7 @@ variables around to the individual functions:
 {% highlight python %}
 def activate_crm114(code):
     interface = PanelInterface()
-	
+
     activation_token = enter_code(interface, code)
 
     test_result = test_self_destruct(interface, activation_token)
