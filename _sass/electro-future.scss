@@ -1,0 +1,28 @@
+@import "bourbon/bourbon";
+@import "neat/neat";
+
+.container {
+    @include outer-container;
+}
+
+.main-area {
+    @include row();
+    @include span-columns(12);
+}
+
+.content {
+    @include span-columns(8 of 12);
+}
+
+.side-nav {
+    @include span-columns(3 of 12);
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    @include linear-gradient(90deg, #1e5799, #2989d8, #1e5799);
+}
+
+.title {
+    text-align: center;
+}
