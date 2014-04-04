@@ -2,3 +2,7 @@ paginate: 5
 name: The Electro-Future
 description: Thomas Stephens's Tech Blog
 url: http://spiralman.github.com
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
