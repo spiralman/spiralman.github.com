@@ -18,6 +18,11 @@
 ;; Point it straight at homebrew-installed Exuberant ctags
 (setq path-to-ctags "/usr/local/bin/ctags")
 
+(setq temporary-file-directory "~/.emacs.d/tmp")
+
+(fset 'markdown-slide
+   "<section>\C-m<div markdown=\"1\">\C-m\C-m</div>\C-m</section>\C-[OA\C-[OA\C-m\C-m\C-[OA")
+
 (defun create-tags (dir-name)
   "Create tags file"
   (interactive "DDirectory: ")
@@ -26,7 +31,7 @@
            (directory-file-name dir-name)))
   )
 
-(setq highlight-80+-columns 79)
+(setq-default highlight-80+-columns 79)
 
 ;; minor modes used in *any* major mode
 (add-hook 'after-change-major-mode-hook
@@ -34,10 +39,51 @@
 	    (highlight-80+-mode)
 	    ))
 
+(defun find-root-file (name dir)
+  (car
+   (or
+    (mapcar (lambda (file)
+              (expand-file-name file dir))
+            (directory-files dir nil name))
+    (mapcar (lambda (upper)
+              (find-root-file name upper))
+            (delq dir (list (expand-file-name ".." dir)))
+            )
+    )
+   )
+  )
+
+(defun flymake-create-temp-intemp (file-name prefix)
+  "Return file name in temporary directory for checking FILE-NAME.
+This is a replacement for `flymake-create-temp-inplace'. The
+difference is that it gives a file name in
+`temporary-file-directory' instead of the same directory as
+FILE-NAME.
+
+For the use of PREFIX see that function.
+
+Note that not making the temporary file in another directory
+\(like here) will not if the file you are checking depends on
+relative paths to other files \(for the type of checks flymake
+makes)."
+  (unless (stringp file-name)
+    (error "Invalid file-name"))
+  (or prefix
+      (setq prefix "flymake"))
+  (let* ((name (concat
+                (file-name-nondirectory
+                 (file-name-sans-extension file-name))
+                "_" prefix))
+         (ext  (concat "." (file-name-extension file-name)))
+         (temp-name (make-temp-file name nil ext))
+         )
+    (flymake-log 3 "create-temp-intemp: file=%s temp=%s" file-name temp-name)
+    temp-name))
+
 (when (load "flymake" t)
   (defun flymake-pycheck-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		      'flymake-create-temp-inplace))
+		      'flymake-create-temp-intemp))
 	   (local-file (file-relative-name
 			temp-file
 			(file-name-directory buffer-file-name))))
@@ -45,11 +91,16 @@
 
   (defun flymake-jsl-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		       'flymake-create-temp-inplace))
+		       'flymake-create-temp-intemp))
 	   (local-file (file-relative-name
 			temp-file
 			(file-name-directory buffer-file-name))))
-      (list "jsl" (list "-process" local-file))))
+      (list "jsl" (list "--nologo" "--nosummary" "--nofilelisting" "--conf"
+                        (find-root-file "jsl.conf" (file-name-directory buffer-file-name))
+                        local-file )
+            )
+      )
+    )
 
   (add-to-list 'flymake-allowed-file-name-masks
 	       '("\\.py\\'" flymake-pycheck-init))
@@ -68,11 +119,31 @@
 	    )
       )
 
+(add-hook 'scss-mode-hook
+	  '(lambda ()
+	     (set-variable css-indent-offset 2)
+	     (set-variable scss-compile-at-save nil)
+	     )
+	  )
+
+(add-hook 'html-mode-hook
+	  '(lambda ()
+	     (set-variable sgml-basic-offset 2)
+	     )
+	  )
+
 (add-hook 'python-mode-hook
 	  '(lambda ()
-       (local-set-key (kbd "C-<") 'python-shift-left)
-       (local-set-key (kbd "C->") 'python-shift-right)
-	     (flymake-mode)))
+	     (local-set-key (kbd "C-<") 'python-indent-shift-left)
+	     (local-set-key (kbd "C->") 'python-indent-shift-right)
+	     (add-to-list 'write-file-functions 'delete-trailing-whitespace)
+	     (flymake-mode)
+	     (make-local-variable 'highlight-80+-columns)
+	     (setq highlight-80+-columns 99)
+	     ))
+
+;; requires puppet-mode
+(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
 ;; requires coffee-mode
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
@@ -89,6 +160,7 @@
 (add-hook 'js2-mode-hook
 	  (lambda ()
 	    (setq js2-basic-offset 2)
+	    (add-to-list 'write-file-functions 'delete-trailing-whitespace)
       (set-variable 'indent-tabs-mode nil)
       (flymake-mode)))
 
