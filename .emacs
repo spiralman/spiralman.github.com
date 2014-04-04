@@ -37,6 +37,7 @@
 (add-hook 'after-change-major-mode-hook
 	  (lambda ()
 	    (highlight-80+-mode)
+	    (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 	    ))
 
 (defun find-root-file (name dir)
@@ -136,7 +137,6 @@ makes)."
 	  '(lambda ()
 	     (local-set-key (kbd "C-<") 'python-indent-shift-left)
 	     (local-set-key (kbd "C->") 'python-indent-shift-right)
-	     (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 	     (flymake-mode)
 	     (make-local-variable 'highlight-80+-columns)
 	     (setq highlight-80+-columns 99)
@@ -160,7 +160,6 @@ makes)."
 (add-hook 'js2-mode-hook
 	  (lambda ()
 	    (setq js2-basic-offset 2)
-	    (add-to-list 'write-file-functions 'delete-trailing-whitespace)
       (set-variable 'indent-tabs-mode nil)
       (flymake-mode)))
 
