@@ -3,6 +3,22 @@
 @import "bourbon/bourbon";
 @import "neat/neat";
 
+$dark: #3E3E3E;
+$light: #727475;
+$black: #0C0C10;
+$accent: #D6AA72;
+$highlight: #F1CFAA;
+$white: lighten($highlight, 18%);
+$complement: #538EA4;
+$complement-highlight: #AADEF1;
+
+@mixin content-box {
+    background: $white;
+    border-radius: 2px;
+    padding: 15px;
+    box-shadow: inset 0 0 10px 5px lighten($light, 50%);
+}
+
 .container {
     @include outer-container;
 }
@@ -14,17 +30,63 @@
 
 .content {
     @include span-columns(8 of 12);
+    @include content-box();
 }
 
 .side-nav {
     @include span-columns(3 of 12);
+    @include shift(1);
+    @include content-box();
+}
+
+.navbar {
+    @include row();
+    @include span-columns(12);
+    list-style: none outside;
+    background: $dark;
+    margin: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 0;
+
+    .navbar-item {
+	display: inline;
+	margin-left: 30px;
+	a {
+	    color: $white;
+	}
+    }
 }
 
 body {
     font-family: 'Open Sans', sans-serif;
-    @include linear-gradient(90deg, #1e5799, #2989d8, #1e5799);
+    @include linear-gradient(90deg, $dark, $light, $dark);
+    color: $black;
 }
 
-.title {
-    text-align: center;
+a {
+    color: $complement;
+    text-decoration: none;
+    &:hover {
+	text-decoration: underline;
+    }
+}
+
+.heading {
+    @include row();
+    @include span-columns(12);
+    @include content-box();
+    padding-left: 60px;
+
+    .title {
+	font-size: 4em;
+	font-weight: 800;
+	margin-bottom: 10px;
+    }
+
+    .subtitle {
+	font-size: 1.5em;
+	font-style: italic;
+	margin-top: 0px;
+    }
 }
