@@ -1,6 +1,13 @@
 // sass --watch _sass/electro-future.scss:css/electro-future.css
 
 @import "bourbon/bourbon";
+
+@import "neat/neat-helpers";
+
+// Must come before import of neat itself
+$tablet: new-breakpoint(max-width 768px 9);
+$mobile: new-breakpoint(max-width 480px 6);
+
 @import "neat/neat";
 
 $dark: #3E3E3E;
@@ -36,6 +43,19 @@ $complement-highlight: #AADEF1;
     border: 1px solid $light;
     border-radius: 2px;
     padding: 10px;
+    overflow: scroll;
+}
+
+@mixin full-width {
+    @include span-columns(12);
+
+    @include media($tablet) {
+	@include span-columns(9);
+    }
+
+    @include media($mobile) {
+	@include span-columns(6);
+    }
 }
 
 .container {
@@ -44,12 +64,20 @@ $complement-highlight: #AADEF1;
 
 .main-area {
     @include row();
-    @include span-columns(12);
+    @include full-width();
 }
 
 .content {
-    @include span-columns(9 of 12);
+    @include span-columns(9);
     @include content-box(bottom);
+
+    @include media($tablet) {
+	@include span-columns(9);
+    }
+
+    @include media($mobile) {
+	@include span-columns(6);
+    }
 
     pre {
 	@include inner-box();
@@ -59,6 +87,10 @@ $complement-highlight: #AADEF1;
 .side-nav {
     @include span-columns(3 of 12);
     @include content-box(bottom);
+
+    @include media($tablet) {
+	display: none;
+    }
 
     .section {
 	.section-title {
@@ -76,7 +108,8 @@ $complement-highlight: #AADEF1;
 
 .navbar {
     @include row();
-    @include span-columns(12);
+    @include full-width();
+
     list-style: none outside;
     background: $dark;
     margin: 0;
@@ -117,7 +150,7 @@ a {
 
 .heading {
     @include row();
-    @include span-columns(12);
+    @include full-width();
     @include content-box(top);
     padding-left: 60px;
 
@@ -136,7 +169,7 @@ a {
 
 footer {
     @include row();
-    @include span-columns(12);
+    @include full-width();
     margin-top: 10px;
     color: $white;
 
