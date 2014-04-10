@@ -7,12 +7,6 @@
     <link href="/css/electro-future.css" rel="stylesheet"/>
     <link href="/css/pygments.css" rel="stylesheet"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <style>
-      body {
-        padding-top: 30px;
-      }
-    </style>
-
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -25,11 +19,16 @@
 	<h1 class="title">The Electro-Future</h1>
 	<p class="subtitle">Where is my flying car?</p>
       </div>
-      <ul class="navbar">
-	<li class="navbar-item"><a {% if page.url == '/index.html' %}class="active"{% endif %} href="/">Blog</a></li>
-	<li class="navbar-item"><a {% if page.url == '/projects.html' %}class="active"{% endif %} href="/projects.html">Projects</a></li>
-	<li class="navbar-item"><a {% if page.url == '/about.html' %}class="active"{% endif %} href="/about.html">About Me</a></li>
-      </ul>
+      <div class="navbar-container" data-spy="affix" data-offset-top="235">
+	<div class="navbar">
+	  <span class="navbar-title"><a class="active" href="/">The Electro-Future</a></span>
+	  <ul class="navlist">
+	    <li class="navbar-item"><a {% if page.url == '/index.html' %}class="active"{% endif %} href="/">Blog</a></li>
+	    <li class="navbar-item"><a {% if page.url == '/projects.html' %}class="active"{% endif %} href="/projects.html">Projects</a></li>
+	    <li class="navbar-item"><a {% if page.url == '/about.html' %}class="active"{% endif %} href="/about.html">About Me</a></li>
+	  </ul>
+	</div>
+      </div>
       <div class="main-area">
 	<div class="content">
 	  {{ content }}
@@ -62,15 +61,6 @@
       </footer>
     </div>
     <script src="http://code.jquery.com/jquery-1.8.0.min.js" type="text/javascript"></script>
-    <script>
-      $(function() {
-        var currentNavLink = $("ul.nav li:contains('{{ page.title }}')")
-        if( currentNavLink.length == 0 ) {
-          currentNavLink = $("ul.nav li.blog");
-        }
-
-        currentNavLink.addClass('active');
-      });
-    </script>
+    <script src="/js/bootstrap-affix-3.1.1.min.js" type="text/javascript"></script>
   </body>
 </html>
