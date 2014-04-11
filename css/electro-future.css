@@ -140,7 +140,9 @@
   float: left;
   margin-right: 2.35765%;
   width: 100%;
-  background: #3e3e3e; }
+  background: #3e3e3e;
+  padding-top: 15px;
+  padding-bottom: 15px; }
   .navbar:last-child {
     margin-right: 0; }
   @media screen and (max-width: 768px) {
@@ -159,6 +161,11 @@
       width: 100%; }
       .navbar:last-child {
         margin-right: 0; } }
+  @media screen and (max-width: 768px) {
+    .navbar {
+      position: fixed;
+      top: 0;
+      max-width: 68em; } }
   .affix .navbar {
     position: fixed;
     top: 0;
@@ -167,9 +174,14 @@
     display: inline-block;
     list-style: none outside;
     margin: 0;
-    padding-top: 15px;
-    padding-left: 0;
-    padding-bottom: 15px; }
+    padding-left: 0; }
+    @media screen and (max-width: 768px) {
+      .navbar .navlist {
+        float: right;
+        margin-right: 30px; } }
+    .affix .navbar .navlist {
+      float: right;
+      margin-right: 30px; }
     .navbar .navlist .navbar-item, .navbar .navlist .navbar-title {
       display: inline;
       margin-left: 30px; }
@@ -181,11 +193,13 @@
       color: #fefcf9; }
   .navbar .navbar-title {
     display: none; }
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 768px) {
       .navbar .navbar-title {
-        display: inline; } }
+        display: inline-block;
+        margin-left: 30px; } }
     .affix .navbar .navbar-title {
-      display: inline; }
+      display: inline-block;
+      margin-left: 30px; }
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -246,6 +260,9 @@ a {
     font-size: 1.5em;
     font-style: italic;
     margin-top: 0px; }
+  @media screen and (max-width: 768px) {
+    .heading {
+      display: none; } }
 
 footer {
   *zoom: 1;

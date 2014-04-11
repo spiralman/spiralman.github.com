@@ -106,6 +106,16 @@ $complement-highlight: #AADEF1;
     }
 }
 
+@mixin affixed-navbar {
+    @include media($tablet) {
+	@content;
+    }
+
+    .affix & {
+	@content;
+    }
+}
+
 .navbar-container {
     @include row();
     @include full-width();
@@ -117,8 +127,10 @@ $complement-highlight: #AADEF1;
     @include full-width();
 
     background: $dark;
+    padding-top: 15px;
+    padding-bottom: 15px;
 
-    .affix & {
+    @include affixed-navbar{
 	position: fixed;
 	top: 0;
 	max-width: $max-width;
@@ -129,9 +141,12 @@ $complement-highlight: #AADEF1;
 
 	list-style: none outside;
 	margin: 0;
-	padding-top: 15px;
 	padding-left: 0;
-	padding-bottom: 15px;
+
+	@include affixed-navbar {
+	    float: right;
+	    margin-right: 30px;
+	}
 
 	.navbar-item,.navbar-title {
 	    display: inline;
@@ -154,12 +169,9 @@ $complement-highlight: #AADEF1;
     .navbar-title {
 	display: none;
 
-	@include media($mobile) {
-	    display:inline;
-	}
-
-	.affix & {
-	    display: inline;
+	@include affixed-navbar {
+	    display:inline-block;
+	    margin-left: 30px;
 	}
     }
 }
@@ -195,6 +207,10 @@ a {
 	font-size: 1.5em;
 	font-style: italic;
 	margin-top: 0px;
+    }
+
+    @include media($tablet) {
+	display: none;
     }
 }
 
