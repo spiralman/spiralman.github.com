@@ -170,6 +170,16 @@
     position: fixed;
     top: 0;
     max-width: 68em; }
+  @media screen and (max-width: 768px) {
+    .navbar {
+      max-width: none;
+      right: 8px; } }
+  .navbar a {
+    color: #f6f4f1; }
+    .navbar a:hover {
+      color: #fefcf9; }
+    .navbar a.active {
+      color: #fefcf9; }
   .navbar .navlist {
     display: inline-block;
     list-style: none outside;
@@ -178,19 +188,23 @@
     @media screen and (max-width: 768px) {
       .navbar .navlist {
         float: right;
-        margin-right: 30px; } }
+        margin-right: 15px; } }
     .affix .navbar .navlist {
       float: right;
-      margin-right: 30px; }
+      margin-right: 15px; }
+    @media screen and (max-width: 480px) {
+      .navbar .navlist {
+        display: none; }
+        .navbar .navlist.menu-shown {
+          display: block;
+          width: 100%;
+          margin-top: 22px; }
+          .navbar .navlist.menu-shown .navbar-item {
+            display: list-item;
+            text-align: right; } }
     .navbar .navlist .navbar-item, .navbar .navlist .navbar-title {
       display: inline;
       margin-left: 30px; }
-  .navbar a {
-    color: #f6f4f1; }
-    .navbar a:hover {
-      color: #fefcf9; }
-    .navbar a.active {
-      color: #fefcf9; }
   .navbar .navbar-title {
     display: none; }
     @media screen and (max-width: 768px) {
@@ -200,6 +214,14 @@
     .affix .navbar .navbar-title {
       display: inline-block;
       margin-left: 30px; }
+  .navbar .navbar-menu {
+    display: none; }
+    @media screen and (max-width: 480px) {
+      .navbar .navbar-menu {
+        float: right;
+        display: inline-block;
+        margin-right: 15px;
+        color: #fefcf9; } }
 
 body {
   font-family: 'Open Sans', sans-serif;

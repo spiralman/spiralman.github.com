@@ -22,7 +22,8 @@
       <div class="navbar-container" data-spy="affix" data-offset-top="235">
 	<div class="navbar">
 	  <span class="navbar-title"><a class="active" href="/">The Electro-Future</a></span>
-	  <ul class="navlist">
+	  <span class="navbar-menu" data-menu-toggle="pagenav">V</span>
+	  <ul id="pagenav" class="navlist">
 	    <li class="navbar-item"><a {% if page.url == '/index.html' %}class="active"{% endif %} href="/">Blog</a></li>
 	    <li class="navbar-item"><a {% if page.url == '/projects.html' %}class="active"{% endif %} href="/projects.html">Projects</a></li>
 	    <li class="navbar-item"><a {% if page.url == '/about.html' %}class="active"{% endif %} href="/about.html">About Me</a></li>
@@ -62,5 +63,19 @@
     </div>
     <script src="http://code.jquery.com/jquery-1.8.0.min.js" type="text/javascript"></script>
     <script src="/js/bootstrap-affix-3.1.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      $(function() {
+        var $menu_toggles = $('[data-menu-toggle]');
+
+        $menu_toggles.each(function(index) {
+          var $el = $($menu_toggles[index]);
+          var $target = $('#' + $el.attr('data-menu-toggle'));
+          $el.click(function() {
+            $target.toggle();
+            $target.toggleClass('menu-shown');
+          });
+        });
+      });
+    </script>
   </body>
 </html>

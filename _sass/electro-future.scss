@@ -136,22 +136,9 @@ $complement-highlight: #AADEF1;
 	max-width: $max-width;
     }
 
-    .navlist {
-	display: inline-block;
-
-	list-style: none outside;
-	margin: 0;
-	padding-left: 0;
-
-	@include affixed-navbar {
-	    float: right;
-	    margin-right: 30px;
-	}
-
-	.navbar-item,.navbar-title {
-	    display: inline;
-	    margin-left: 30px;
-	}
+    @include media($tablet) {
+	max-width: none;
+	right: 8px;
     }
 
     a {
@@ -166,12 +153,56 @@ $complement-highlight: #AADEF1;
 	}
     }
 
+    .navlist {
+	display: inline-block;
+
+	list-style: none outside;
+	margin: 0;
+	padding-left: 0;
+
+	@include affixed-navbar {
+	    float: right;
+	    margin-right: 15px;
+	}
+
+	@include media($mobile) {
+	    display: none;
+
+	    &.menu-shown {
+		display: block;
+		width: 100%;
+		margin-top: 22px;
+
+		.navbar-item {
+		    display: list-item;
+		    text-align: right;
+		}
+	    }
+	}
+
+	.navbar-item,.navbar-title {
+	    display: inline;
+	    margin-left: 30px;
+	}
+    }
+
     .navbar-title {
 	display: none;
 
 	@include affixed-navbar {
 	    display:inline-block;
 	    margin-left: 30px;
+	}
+    }
+
+    .navbar-menu {
+	display: none;
+
+	@include media($mobile) {
+	    float: right;
+	    display: inline-block;
+	    margin-right: 15px;
+	    color: $white;
 	}
     }
 }
