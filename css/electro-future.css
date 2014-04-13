@@ -205,15 +205,17 @@
     .navbar .navlist .navbar-item, .navbar .navlist .navbar-title {
       display: inline;
       margin-left: 30px; }
+      .navbar .navlist .navbar-item:first-child, .navbar .navlist .navbar-title:first-child {
+        margin-left: 15px; }
   .navbar .navbar-title {
     display: none; }
     @media screen and (max-width: 768px) {
       .navbar .navbar-title {
         display: inline-block;
-        margin-left: 30px; } }
+        margin-left: 15px; } }
     .affix .navbar .navbar-title {
       display: inline-block;
-      margin-left: 30px; }
+      margin-left: 15px; }
   .navbar .navbar-menu {
     display: none; }
     @media screen and (max-width: 480px) {

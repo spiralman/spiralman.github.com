@@ -183,6 +183,10 @@ $complement-highlight: #AADEF1;
 	.navbar-item,.navbar-title {
 	    display: inline;
 	    margin-left: 30px;
+
+	    &:first-child {
+		margin-left: 15px;
+	    }
 	}
     }
 
@@ -191,7 +195,7 @@ $complement-highlight: #AADEF1;
 
 	@include affixed-navbar {
 	    display:inline-block;
-	    margin-left: 30px;
+	    margin-left: 15px;
 	}
     }
 
