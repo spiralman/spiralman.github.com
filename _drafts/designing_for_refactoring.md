@@ -33,56 +33,52 @@ def parse_file(filename):
         return document
 {% endhighlight %}
 
-Now, when I have some new file format, I just need to register the
-extension of my format with ParserFactory, and provide a `parse`
-method, which returns some pre-defined document type. I never have to
-modify `parse_file` again!
+This code makes it very easy to add new file formats, keyed off of the
+file extension. You just register the new parser, with its extension,
+implement `parse`, and you're done. You don't even need to modify
+`parse_file`.
 
-Well, not quite. The problem is, I wrote that code in 2005, before
-that whole "cloud computing" thing happened, so it's just dealing with
-boring old files. Let's say I want to add a feature to parse a file
-from Dropbox or Google Drive?
+Now let's say a new requirement comes down from above: instead of
+parsing different file formats, users want to be able to parse files
+from Dropbox, or other cloud storage providers. Now my factory won't
+help me, and I'll have to change `parse_file` again!
 
-Turns out that the `Parser` interface is probably fine: hopefully
-whatever libraries I'm using can return a file-like object (a pretty
-common construct in almost any language's standard library), or I can
-use a string/file-object wrapper (again, a pretty common construct). I
-can also probably get away with not changing the external interface to
-`parse_file`, and just pass in URIs with made-up schemes, like
-`dropbox://some/dropbox/file`, to indicate I want to load the file
-from Dropbox.
+But, when you think about it, that's not really a big deal. I only
+have to change a couple lines of code, implement another factory for
+accessing file contents as a stream, add some unit tests I would have
+had to write either way, and push out my changes.
 
-That `open` call might be a problem, though. Python's built-in open
-function certainly can't read files from Dropbox. I suppose I could
-download the file from Dropbox, store it locally, parse it, and (if my
-application allows changes), sync it back up at some point, but that's
-a pretty cludgey workflow, and has all sorts of extra corner cases. It
-would be especially problematic if I'm calling `parse_file` from a lot
-of different places, all of which can parse files from cloud
-providers.
+This example is a bit synthesized, but you can probably imagine
+(because you've probably seen it before) a system with *lots* of
+factories and polymorphism and branching logic. And you can probably
+imagine (or remember) how hard it is to reason about a system like
+that, and how it's even harder to change it safely. This becomes
+especially frustrating when all the complexity is in service of
+flexibilty that you found out you never even needed.
 
-It turns out that, if I want to implement this feature, I *do* have to
-change `parse_file` after all. And, when you think about it, that's
-not really a big deal. I only have to change a couple lines of code,
-implement another factory for the URI scheme handling (very simple in
-most modern languages), add some unit tests I would have had to write
-either way, and push out my changes.
+Lately, I've been thinking about this problem in a new way: instead of
+designing for extensibilty, I've been designing for
+refactorability. What this means is, when I implement something that
+I think I might need to change, I won't actually add the factory or
+class hierarchy, but I will think about how I *would* add it later.
 
-Now, let's consider this: in all those years between when I wrote the
-code, and I needed to add Dropbox support, I *never* had to support a
-new file format. All that file parsing factory code was a waste:
-there's only ever one file type, and the requirement that changed was
-actually where the file came from, not how it was formatted.
+I plan for the change by making sure that adding the logic won't be
+painful in the future, even if I still do need to modify existing
+code. I try to make sure that the change will only be in one place,
+instead of many, and that it won't invole much, if any, usage of the
+find-replace feature.
 
-Of course, this example is hypothetical (I'm pretty sure Python didn't
-even have context managers in 2005!), but this is something I see all
-over the place, and something I've probably done a million times
-myself. The fact of the matter is, you may *think* you know where to
-put the extensibility points, but you are probably going to be wrong
-half the time. In the meantime, all that "extensible" code is more
-complicated, harder to understand, and has more points of failure than
-simply calling the one function to parse the one file format you
-support right now.
+The cool thing about this is that code that's easy to refactor is also
+just good code:
+
+* Doing a complicated find-replace means you probably repeated some
+  logic you should have put in a function.
+* Changing lots of code because a function changed means you probably
+  didn't encapsulate your logic correctly.
+* Updating lots of mocks in your unit tests means you're probably
+  mocking out too many interfaces.
+* And not *trusting* your refactoring means you probably don't have
+  enough, or the right, unit tests.
 
 What we often forget is that we *always* have to change the code we
 write: maybe there's a feature we didn't anticipate, or maybe there's
@@ -92,37 +88,5 @@ that's OK. All good developers accept that subconciously, yet we still
 seem intent on avoiding it for features we feel certain we're going to
 have to write just around the corner.
 
-The scarier thing to think about is this: lets say that bit of code up
-there wasn't in a function, but those few lines were sprinkled
-throughout the application wherever a file needed to be parsed. Now
-adding Dropbox support really *is* a problem, because we have to find
-all the instances of that code and replace the `open` calls with our
-URI parsing code. It's definitely a good that to have that logic
-encapsulated in a function we can easily refactor, but if you go into
-the design thinking that parsing different file types is the point of
-extension, you might not really think to encapsulate that logic quite
-that way.
-
-I've started thinking about this as "designing for refactoring." Where
-I'm working now, we're try to be as iterative in our development
-process as we can, and we're getting better at breaking features up
-into sprint-size chunks of work. What this means is that I'll often go
-into some feature development knowing (or thinking) that, next month,
-we're going to need to change this feature in a certain way. However,
-instead of building in the extensibility code right there (using a
-factory or a higher-order function), I'll just think "how can I write
-this so it's simple to refactor it to be more extensible later?"
-
-This doesn't really solve the problem of unanticipated features: I
-probably didn't ask myself that question for some change I didn't know
-is coming, but it *does* mean that if that next feature I was certain
-we'd need never really is needed, I haven't cluttered up the code with
-a bunch of logic that only ever takes one path.
-
-Code that is easy to refactor is just generally good code: repeated
-logic is replaced with a single function; functions and classes
-encapsulate their data and adhere to the single responsibility
-principle. None of these concepts claim to let you add a feature
-without modifying code, but they do make the code simpler and easier
-to read, and they also make it easier to refactor when you finally
-find out what the next feature really is going to be.
+My answer has become: YAGNI. You ain't gonna need it. But if you prove
+me wrong, I'd be happy to refactor my code to support it.
