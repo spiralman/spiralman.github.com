@@ -5,6 +5,7 @@
 @import "neat/neat-helpers";
 
 // Must come before import of neat itself
+$desktop-only: new-breakpoint(min-width 769px 12);
 $tablet: new-breakpoint(max-width 768px 9);
 $mobile: new-breakpoint(max-width 480px 6);
 
@@ -225,14 +226,16 @@ $navtitle-width: 140px + (15px * 2);
 	margin-left: -$navtitle-width;
 	padding: 4px $box-padding;
 
-	.affix & {
-	    @include animation-name(slide-over);
-	    @include animation-duration(2s);
-	}
+	@include media($desktop-only) {
+	    .affix & {
+		@include animation-name(slide-over);
+		@include animation-duration(0.5s);
+	    }
 
-	.unfixed & {
-	    @include animation-name(slide-back);
-	    @include animation-duration(2s);
+	    .unfixed & {
+		@include animation-name(slide-back);
+		@include animation-duration(0.5s);
+	    }
 	}
 
 	@include affixed-navbar {

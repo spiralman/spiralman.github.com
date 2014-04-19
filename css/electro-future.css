@@ -274,20 +274,21 @@
         color: #0c0c10; }
       .navbar .navbar-title a.active {
         color: #0c0c10; }
-    .affix .navbar .navbar-title {
-      -webkit-animation-name: slide-over;
-      -moz-animation-name: slide-over;
-      animation-name: slide-over;
-      -webkit-animation-duration: 2s;
-      -moz-animation-duration: 2s;
-      animation-duration: 2s; }
-    .unfixed .navbar .navbar-title {
-      -webkit-animation-name: slide-back;
-      -moz-animation-name: slide-back;
-      animation-name: slide-back;
-      -webkit-animation-duration: 2s;
-      -moz-animation-duration: 2s;
-      animation-duration: 2s; }
+    @media screen and (min-width: 769px) {
+      .affix .navbar .navbar-title {
+        -webkit-animation-name: slide-over;
+        -moz-animation-name: slide-over;
+        animation-name: slide-over;
+        -webkit-animation-duration: 0.5s;
+        -moz-animation-duration: 0.5s;
+        animation-duration: 0.5s; }
+      .unfixed .navbar .navbar-title {
+        -webkit-animation-name: slide-back;
+        -moz-animation-name: slide-back;
+        animation-name: slide-back;
+        -webkit-animation-duration: 0.5s;
+        -moz-animation-duration: 0.5s;
+        animation-duration: 0.5s; } }
     @media screen and (max-width: 768px) {
       .navbar .navbar-title {
         margin-left: 0; } }
