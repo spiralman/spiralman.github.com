@@ -105,28 +105,28 @@
 
 @-webkit-keyframes slide-over {
   from {
-    margin-left: -170px; }
+    margin-left: -177px; }
 
   to {
     margin-left: 0; } }
 
 @-moz-keyframes slide-over {
   from {
-    margin-left: -170px; }
+    margin-left: -177px; }
 
   to {
     margin-left: 0; } }
 
 @-o-keyframes slide-over {
   from {
-    margin-left: -170px; }
+    margin-left: -177px; }
 
   to {
     margin-left: 0; } }
 
 @keyframes slide-over {
   from {
-    margin-left: -170px; }
+    margin-left: -177px; }
 
   to {
     margin-left: 0; } }
@@ -136,28 +136,28 @@
     margin-left: 0; }
 
   to {
-    margin-left: -170px; } }
+    margin-left: -177px; } }
 
 @-moz-keyframes slide-back {
   from {
     margin-left: 0; }
 
   to {
-    margin-left: -170px; } }
+    margin-left: -177px; } }
 
 @-o-keyframes slide-back {
   from {
     margin-left: 0; }
 
   to {
-    margin-left: -170px; } }
+    margin-left: -177px; } }
 
 @keyframes slide-back {
   from {
     margin-left: 0; }
 
   to {
-    margin-left: -170px; } }
+    margin-left: -177px; } }
 
 .navbar-container {
   *zoom: 1;
@@ -232,6 +232,9 @@
       max-width: none;
       right: 8px;
       left: 8px; } }
+  @media screen and (max-width: 480px) {
+    .navbar {
+      width: auto; } }
   .navbar a {
     color: #f6f4f1; }
     .navbar a:hover {
@@ -248,8 +251,13 @@
         display: none; }
         .navbar .navlist.menu-shown {
           display: block;
-          width: 100%;
-          margin-top: 22px; }
+          margin-top: 10px;
+          padding-top: 10px;
+          padding-left: 15px;
+          padding-right: 15px;
+          padding-bottom: 10px;
+          margin-bottom: -15px;
+          background-color: #717171; }
           .navbar .navlist.menu-shown .navbar-item {
             display: list-item;
             text-align: right; } }
@@ -266,8 +274,9 @@
     border-bottom-right-radius: 2px;
     padding: 15px;
     box-shadow: inset 0 0 10px 5px #f3f3f3;
-    margin-left: -170px;
-    padding: 4px 15px; }
+    margin-left: -177px;
+    padding: 4px 15px;
+    font-weight: 600; }
     .navbar .navbar-title a {
       color: #0c0c10; }
       .navbar .navbar-title a:hover {

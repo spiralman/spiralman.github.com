@@ -120,7 +120,7 @@ $body-margin: 8px;
     }
 }
 
-$navtitle-width: 140px + (15px * 2);
+$navtitle-width: 147px + (15px * 2);
 
 @include keyframes(slide-over) {
     from {
@@ -184,6 +184,10 @@ $navtitle-width: 140px + (15px * 2);
 	left: 8px;
     }
 
+    @include media($mobile) {
+	width: auto;
+    }
+
     @include color-links($faded, $white);
 
     .navlist {
@@ -198,8 +202,14 @@ $navtitle-width: 140px + (15px * 2);
 
 	    &.menu-shown {
 		display: block;
-		width: 100%;
-		margin-top: 22px;
+		margin-top: 10px;
+		padding-top: 10px;
+		padding-left: $box-padding;
+		padding-right: $box-padding;
+		padding-bottom: 10px;
+		margin-bottom: -15px;
+
+		background-color: lighten($dark, 20%);
 
 		.navbar-item {
 		    display: list-item;
@@ -225,6 +235,7 @@ $navtitle-width: 140px + (15px * 2);
 
 	margin-left: -$navtitle-width;
 	padding: 4px $box-padding;
+	font-weight: 600;
 
 	@include media($desktop-only) {
 	    .affix & {
