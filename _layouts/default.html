@@ -66,6 +66,7 @@
     <script type="text/javascript">
       $(function() {
         var $menu_toggles = $('[data-menu-toggle]');
+        var $affixed = $('[data-spy="affix"]');
 
         $menu_toggles.each(function(index) {
           var $el = $($menu_toggles[index]);
@@ -73,6 +74,26 @@
           $el.click(function() {
             $target.toggle();
             $target.toggleClass('menu-shown');
+          });
+        });
+
+        $affixed.each(function(index) {
+          var $el = $($affixed[index]);
+          var affixed_once = false;
+
+          $el.on('affixed.bs.affix', function() {
+            if (affixed_once) {
+              $(this).removeClass('unfixed');
+            }
+          });
+
+          $el.on('affixed-top.bs.affix', function() {
+            if (!affixed_once) {
+              affixed_once = true;
+            }
+            else {
+              $(this).addClass('unfixed');
+            }
           });
         });
       });
