@@ -71,9 +71,17 @@
         $menu_toggles.each(function(index) {
           var $el = $($menu_toggles[index]);
           var $target = $('#' + $el.attr('data-menu-toggle'));
+          var shown_once = false;
+
           $el.click(function() {
-            $target.toggle();
             $target.toggleClass('menu-shown');
+
+            if (shown_once) {
+              $target.toggleClass('menu-hidden');
+            }
+            else {
+              shown_once = true;
+            }
           });
         });
 

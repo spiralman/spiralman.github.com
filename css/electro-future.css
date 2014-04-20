@@ -159,6 +159,94 @@
   to {
     margin-left: -177px; } }
 
+@-webkit-keyframes slide-down {
+  from {
+    height: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px; }
+
+  to {
+    height: 86px;
+    padding-top: 10px;
+    padding-bottom: 10px; } }
+
+@-moz-keyframes slide-down {
+  from {
+    height: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px; }
+
+  to {
+    height: 86px;
+    padding-top: 10px;
+    padding-bottom: 10px; } }
+
+@-o-keyframes slide-down {
+  from {
+    height: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px; }
+
+  to {
+    height: 86px;
+    padding-top: 10px;
+    padding-bottom: 10px; } }
+
+@keyframes slide-down {
+  from {
+    height: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px; }
+
+  to {
+    height: 86px;
+    padding-top: 10px;
+    padding-bottom: 10px; } }
+
+@-webkit-keyframes slide-up {
+  from {
+    height: 86px;
+    padding-top: 10px;
+    padding-bottom: 10px; }
+
+  to {
+    height: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px; } }
+
+@-moz-keyframes slide-up {
+  from {
+    height: 86px;
+    padding-top: 10px;
+    padding-bottom: 10px; }
+
+  to {
+    height: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px; } }
+
+@-o-keyframes slide-up {
+  from {
+    height: 86px;
+    padding-top: 10px;
+    padding-bottom: 10px; }
+
+  to {
+    height: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px; } }
+
+@keyframes slide-up {
+  from {
+    height: 86px;
+    padding-top: 10px;
+    padding-bottom: 10px; }
+
+  to {
+    height: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px; } }
+
 .navbar-container {
   *zoom: 1;
   display: block;
@@ -246,26 +334,55 @@
     list-style: none outside;
     margin: 0;
     padding-left: 0; }
-    @media screen and (max-width: 480px) {
-      .navbar .navlist {
-        display: none; }
-        .navbar .navlist.menu-shown {
-          display: block;
-          margin-top: 10px;
-          padding-top: 10px;
-          padding-left: 15px;
-          padding-right: 15px;
-          padding-bottom: 10px;
-          margin-bottom: -15px;
-          background-color: #717171; }
-          .navbar .navlist.menu-shown .navbar-item {
-            display: list-item;
-            text-align: right; } }
     .navbar .navlist .navbar-item, .navbar .navlist .navbar-title {
       display: inline;
       margin-left: 30px; }
       .navbar .navlist .navbar-item:first-child, .navbar .navlist .navbar-title:first-child {
         margin-left: 15px; }
+    @media screen and (max-width: 480px) {
+      .navbar .navlist {
+        *zoom: 1;
+        display: block;
+        display: none;
+        overflow: hidden;
+        position: relative;
+        top: 12px;
+        padding-left: 15px;
+        padding-right: 15px;
+        background-color: #717171; }
+        .navbar .navlist:before, .navbar .navlist:after {
+          content: " ";
+          display: table; }
+        .navbar .navlist:after {
+          clear: both; }
+        .navbar .navlist .navbar-item {
+          display: list-item;
+          text-align: right; }
+        .navbar .navlist.menu-hidden {
+          -webkit-animation-name: slide-up;
+          -moz-animation-name: slide-up;
+          animation-name: slide-up;
+          -webkit-animation-duration: 0.5s;
+          -moz-animation-duration: 0.5s;
+          animation-duration: 0.5s;
+          -webkit-animation-timing-function: ease-out;
+          -moz-animation-timing-function: ease-out;
+          animation-timing-function: ease-out;
+          display: block;
+          height: 0px; }
+        .navbar .navlist.menu-shown {
+          -webkit-animation-name: slide-down;
+          -moz-animation-name: slide-down;
+          animation-name: slide-down;
+          -webkit-animation-duration: 0.5s;
+          -moz-animation-duration: 0.5s;
+          animation-duration: 0.5s;
+          -webkit-animation-timing-function: ease-out;
+          -moz-animation-timing-function: ease-out;
+          animation-timing-function: ease-out;
+          display: block;
+          padding-top: 10px;
+          padding-bottom: 10px; } }
   .navbar .navbar-title {
     background: #fefcf9;
     border-top-left-radius: 2px;
@@ -290,14 +407,20 @@
         animation-name: slide-over;
         -webkit-animation-duration: 0.5s;
         -moz-animation-duration: 0.5s;
-        animation-duration: 0.5s; }
+        animation-duration: 0.5s;
+        -webkit-animation-timing-function: ease-out;
+        -moz-animation-timing-function: ease-out;
+        animation-timing-function: ease-out; }
       .unfixed .navbar .navbar-title {
         -webkit-animation-name: slide-back;
         -moz-animation-name: slide-back;
         animation-name: slide-back;
         -webkit-animation-duration: 0.5s;
         -moz-animation-duration: 0.5s;
-        animation-duration: 0.5s; } }
+        animation-duration: 0.5s;
+        -webkit-animation-timing-function: ease-out;
+        -moz-animation-timing-function: ease-out;
+        animation-timing-function: ease-out; } }
     @media screen and (max-width: 768px) {
       .navbar .navbar-title {
         margin-left: 0; } }

@@ -142,6 +142,36 @@ $navtitle-width: 147px + (15px * 2);
     }
 }
 
+@include keyframes(slide-down) {
+    from {
+	height: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+    }
+
+    to {
+	height: 86px;
+
+	padding-top: 10px;
+	padding-bottom: 10px;
+    }
+}
+
+@include keyframes(slide-up) {
+    from {
+	height: 86px;
+
+	padding-top: 10px;
+	padding-bottom: 10px;
+    }
+
+    to {
+	height: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+    }
+}
+
 @mixin color-links($base, $highlight) {
    a {
        color: $base;
@@ -197,33 +227,51 @@ $navtitle-width: 147px + (15px * 2);
 	margin: 0;
 	padding-left: 0;
 
-	@include media($mobile) {
-	    display: none;
-
-	    &.menu-shown {
-		display: block;
-		margin-top: 10px;
-		padding-top: 10px;
-		padding-left: $box-padding;
-		padding-right: $box-padding;
-		padding-bottom: 10px;
-		margin-bottom: -15px;
-
-		background-color: lighten($dark, 20%);
-
-		.navbar-item {
-		    display: list-item;
-		    text-align: right;
-		}
-	    }
-	}
-
 	.navbar-item,.navbar-title {
 	    display: inline;
 	    margin-left: 30px;
 
 	    &:first-child {
 		margin-left: 15px;
+	    }
+	}
+
+	@include media($mobile) {
+	    @include row();
+	    display: none;
+	    overflow: hidden;
+
+	    position: relative;
+	    top: 12px;
+
+	    padding-left: $box-padding;
+	    padding-right: $box-padding;
+
+	    background-color: lighten($dark, 20%);
+
+	    .navbar-item {
+		display: list-item;
+		text-align: right;
+	    }
+
+	    &.menu-hidden {
+		@include animation-name(slide-up);
+		@include animation-duration(0.5s);
+		@include animation-timing-function(ease-out);
+
+		display: block;
+
+		height: 0px;
+	    }
+
+	    &.menu-shown {
+		@include animation-name(slide-down);
+		@include animation-duration(0.5s);
+		@include animation-timing-function(ease-out);
+
+		display: block;
+		padding-top: 10px;
+		padding-bottom: 10px;
 	    }
 	}
     }
@@ -241,11 +289,13 @@ $navtitle-width: 147px + (15px * 2);
 	    .affix & {
 		@include animation-name(slide-over);
 		@include animation-duration(0.5s);
+		@include animation-timing-function(ease-out);
 	    }
 
 	    .unfixed & {
 		@include animation-name(slide-back);
 		@include animation-duration(0.5s);
+		@include animation-timing-function(ease-out);
 	    }
 	}
 
