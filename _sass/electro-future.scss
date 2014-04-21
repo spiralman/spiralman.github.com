@@ -310,8 +310,16 @@ $navtitle-width: 147px + (15px * 2);
 	@include media($mobile) {
 	    float: right;
 	    display: inline-block;
-	    margin-right: 15px;
+	    margin-top: -4px;
+	    max-height: 22px;
+	    min-width: 22px;
+
 	    color: $white;
+
+	    font-weight: 800;
+	    font-size: 16pt;
+
+	    cursor: pointer;
 	}
     }
 }

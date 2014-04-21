@@ -432,8 +432,13 @@
       .navbar .navbar-menu {
         float: right;
         display: inline-block;
-        margin-right: 15px;
-        color: #fefcf9; } }
+        margin-top: -4px;
+        max-height: 22px;
+        min-width: 22px;
+        color: #fefcf9;
+        font-weight: 800;
+        font-size: 16pt;
+        cursor: pointer; } }
 
 body {
   font-family: 'Open Sans', sans-serif;
