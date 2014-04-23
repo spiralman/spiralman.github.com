@@ -384,11 +384,15 @@ footer {
 	margin-bottom: 10px;
 
 	small {
+	    display: block;
+
 	    color: $gray;
-	    font-size: 0.6em;
+
+	    font-size: 0.5em;
 	    font-weight: 400;
-	    margin-top: 100%;
-	    margin-left: 10px;
+
+	    margin-top: 5px;
+	    margin-left: 0px;
 	}
     }
 }
