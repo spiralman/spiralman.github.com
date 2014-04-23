@@ -93,7 +93,10 @@ $body-margin: 8px;
     @include content-box(bottom);
 
     @include media($tablet) {
-	display: none;
+	@include row();
+	@include full-width();
+
+	margin-top: 10px;
     }
 
     .section {

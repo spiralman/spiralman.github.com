@@ -94,7 +94,36 @@
     margin-right: 0; }
   @media screen and (max-width: 768px) {
     .side-nav {
-      display: none; } }
+      *zoom: 1;
+      display: block;
+      display: block;
+      float: left;
+      margin-right: 3.16844%;
+      width: 134.38948%;
+      margin-top: 10px; }
+      .side-nav:before, .side-nav:after {
+        content: " ";
+        display: table; }
+      .side-nav:after {
+        clear: both; }
+      .side-nav:last-child {
+        margin-right: 0; } }
+    @media screen and (max-width: 768px) and (max-width: 768px) {
+      .side-nav {
+        display: block;
+        float: left;
+        margin-right: 3.16844%;
+        width: 100%; }
+        .side-nav:last-child {
+          margin-right: 0; } }
+    @media screen and (max-width: 768px) and (max-width: 480px) {
+      .side-nav {
+        display: block;
+        float: left;
+        margin-right: 4.82916%;
+        width: 100%; }
+        .side-nav:last-child {
+          margin-right: 0; } }
   .side-nav .section .section-title {
     font-weight: 600;
     margin-bottom: 5px; }
