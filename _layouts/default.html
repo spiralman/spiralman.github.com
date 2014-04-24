@@ -71,37 +71,9 @@
         $menu_toggles.each(function(index) {
           var $el = $($menu_toggles[index]);
           var $target = $('#' + $el.attr('data-menu-toggle'));
-          var shown_once = false;
 
           $el.click(function() {
             $target.toggleClass('menu-shown');
-
-            if (shown_once) {
-              $target.toggleClass('menu-hidden');
-            }
-            else {
-              shown_once = true;
-            }
-          });
-        });
-
-        $affixed.each(function(index) {
-          var $el = $($affixed[index]);
-          var affixed_once = false;
-
-          $el.on('affixed.bs.affix', function() {
-            if (affixed_once) {
-              $(this).removeClass('unfixed');
-            }
-          });
-
-          $el.on('affixed-top.bs.affix', function() {
-            if (!affixed_once) {
-              affixed_once = true;
-            }
-            else {
-              $(this).addClass('unfixed');
-            }
           });
         });
       });

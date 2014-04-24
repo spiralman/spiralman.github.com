@@ -132,150 +132,6 @@
     padding-left: 10px;
     margin: 0; }
 
-@-webkit-keyframes slide-over {
-  from {
-    margin-left: -177px; }
-
-  to {
-    margin-left: 0; } }
-
-@-moz-keyframes slide-over {
-  from {
-    margin-left: -177px; }
-
-  to {
-    margin-left: 0; } }
-
-@-o-keyframes slide-over {
-  from {
-    margin-left: -177px; }
-
-  to {
-    margin-left: 0; } }
-
-@keyframes slide-over {
-  from {
-    margin-left: -177px; }
-
-  to {
-    margin-left: 0; } }
-
-@-webkit-keyframes slide-back {
-  from {
-    margin-left: 0; }
-
-  to {
-    margin-left: -177px; } }
-
-@-moz-keyframes slide-back {
-  from {
-    margin-left: 0; }
-
-  to {
-    margin-left: -177px; } }
-
-@-o-keyframes slide-back {
-  from {
-    margin-left: 0; }
-
-  to {
-    margin-left: -177px; } }
-
-@keyframes slide-back {
-  from {
-    margin-left: 0; }
-
-  to {
-    margin-left: -177px; } }
-
-@-webkit-keyframes slide-down {
-  from {
-    height: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px; }
-
-  to {
-    height: 86px;
-    padding-top: 10px;
-    padding-bottom: 10px; } }
-
-@-moz-keyframes slide-down {
-  from {
-    height: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px; }
-
-  to {
-    height: 86px;
-    padding-top: 10px;
-    padding-bottom: 10px; } }
-
-@-o-keyframes slide-down {
-  from {
-    height: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px; }
-
-  to {
-    height: 86px;
-    padding-top: 10px;
-    padding-bottom: 10px; } }
-
-@keyframes slide-down {
-  from {
-    height: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px; }
-
-  to {
-    height: 86px;
-    padding-top: 10px;
-    padding-bottom: 10px; } }
-
-@-webkit-keyframes slide-up {
-  from {
-    height: 86px;
-    padding-top: 10px;
-    padding-bottom: 10px; }
-
-  to {
-    height: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px; } }
-
-@-moz-keyframes slide-up {
-  from {
-    height: 86px;
-    padding-top: 10px;
-    padding-bottom: 10px; }
-
-  to {
-    height: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px; } }
-
-@-o-keyframes slide-up {
-  from {
-    height: 86px;
-    padding-top: 10px;
-    padding-bottom: 10px; }
-
-  to {
-    height: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px; } }
-
-@keyframes slide-up {
-  from {
-    height: 86px;
-    padding-top: 10px;
-    padding-bottom: 10px; }
-
-  to {
-    height: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px; } }
-
 .navbar-container {
   *zoom: 1;
   display: block;
@@ -372,13 +228,24 @@
       .navbar .navlist {
         *zoom: 1;
         display: block;
-        display: none;
         overflow: hidden;
         position: relative;
         top: 12px;
         padding-left: 15px;
         padding-right: 15px;
-        background-color: #717171; }
+        background-color: #717171;
+        height: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        -webkit-transition-property: height, padding-top, padding-bottom;
+        -moz-transition-property: height, padding-top, padding-bottom;
+        transition-property: height, padding-top, padding-bottom;
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+        -webkit-transition-timing-function: ease-out;
+        -moz-transition-timing-function: ease-out;
+        transition-timing-function: ease-out; }
         .navbar .navlist:before, .navbar .navlist:after {
           content: " ";
           display: table; }
@@ -387,29 +254,8 @@
         .navbar .navlist .navbar-item {
           display: list-item;
           text-align: right; }
-        .navbar .navlist.menu-hidden {
-          -webkit-animation-name: slide-up;
-          -moz-animation-name: slide-up;
-          animation-name: slide-up;
-          -webkit-animation-duration: 0.5s;
-          -moz-animation-duration: 0.5s;
-          animation-duration: 0.5s;
-          -webkit-animation-timing-function: ease-out;
-          -moz-animation-timing-function: ease-out;
-          animation-timing-function: ease-out;
-          display: block;
-          height: 0px; }
         .navbar .navlist.menu-shown {
-          -webkit-animation-name: slide-down;
-          -moz-animation-name: slide-down;
-          animation-name: slide-down;
-          -webkit-animation-duration: 0.5s;
-          -moz-animation-duration: 0.5s;
-          animation-duration: 0.5s;
-          -webkit-animation-timing-function: ease-out;
-          -moz-animation-timing-function: ease-out;
-          animation-timing-function: ease-out;
-          display: block;
+          height: 86px;
           padding-top: 10px;
           padding-bottom: 10px; } }
   .navbar .navbar-title {
@@ -430,26 +276,16 @@
       .navbar .navbar-title a.active {
         color: #0c0c10; }
     @media screen and (min-width: 769px) {
-      .affix .navbar .navbar-title {
-        -webkit-animation-name: slide-over;
-        -moz-animation-name: slide-over;
-        animation-name: slide-over;
-        -webkit-animation-duration: 0.5s;
-        -moz-animation-duration: 0.5s;
-        animation-duration: 0.5s;
-        -webkit-animation-timing-function: ease-out;
-        -moz-animation-timing-function: ease-out;
-        animation-timing-function: ease-out; }
-      .unfixed .navbar .navbar-title {
-        -webkit-animation-name: slide-back;
-        -moz-animation-name: slide-back;
-        animation-name: slide-back;
-        -webkit-animation-duration: 0.5s;
-        -moz-animation-duration: 0.5s;
-        animation-duration: 0.5s;
-        -webkit-animation-timing-function: ease-out;
-        -moz-animation-timing-function: ease-out;
-        animation-timing-function: ease-out; } }
+      .navbar .navbar-title {
+        -webkit-transition-property: margin-left;
+        -moz-transition-property: margin-left;
+        transition-property: margin-left;
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+        -webkit-transition-timing-function: ease-out;
+        -moz-transition-timing-function: ease-out;
+        transition-timing-function: ease-out; } }
     @media screen and (max-width: 768px) {
       .navbar .navbar-title {
         margin-left: 0; } }

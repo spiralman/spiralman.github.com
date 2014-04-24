@@ -123,57 +123,7 @@ $body-margin: 8px;
     }
 }
 
-$navtitle-width: 147px + (15px * 2);
-
-@include keyframes(slide-over) {
-    from {
-	margin-left: -$navtitle-width;
-    }
-
-    to {
-	margin-left: 0;
-    }
-}
-
-@include keyframes(slide-back) {
-    from {
-	margin-left: 0;
-    }
-
-    to {
-	margin-left: -$navtitle-width;
-    }
-}
-
-@include keyframes(slide-down) {
-    from {
-	height: 0px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-    }
-
-    to {
-	height: 86px;
-
-	padding-top: 10px;
-	padding-bottom: 10px;
-    }
-}
-
-@include keyframes(slide-up) {
-    from {
-	height: 86px;
-
-	padding-top: 10px;
-	padding-bottom: 10px;
-    }
-
-    to {
-	height: 0px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-    }
-}
+$navtitle-width: 147px + ($box-padding * 2);
 
 @mixin color-links($base, $highlight) {
    a {
@@ -241,7 +191,6 @@ $navtitle-width: 147px + (15px * 2);
 
 	@include media($mobile) {
 	    @include row();
-	    display: none;
 	    overflow: hidden;
 
 	    position: relative;
@@ -257,22 +206,16 @@ $navtitle-width: 147px + (15px * 2);
 		text-align: right;
 	    }
 
-	    &.menu-hidden {
-		@include animation-name(slide-up);
-		@include animation-duration(0.5s);
-		@include animation-timing-function(ease-out);
+	    height: 0px;
+	    padding-top: 0px;
+	    padding-bottom: 0px;
 
-		display: block;
-
-		height: 0px;
-	    }
+	    @include transition-property(height, padding-top, padding-bottom);
+	    @include transition-duration(0.5s);
+	    @include transition-timing-function(ease-out);
 
 	    &.menu-shown {
-		@include animation-name(slide-down);
-		@include animation-duration(0.5s);
-		@include animation-timing-function(ease-out);
-
-		display: block;
+		height: 86px;
 		padding-top: 10px;
 		padding-bottom: 10px;
 	    }
@@ -289,17 +232,9 @@ $navtitle-width: 147px + (15px * 2);
 	font-weight: 600;
 
 	@include media($desktop-only) {
-	    .affix & {
-		@include animation-name(slide-over);
-		@include animation-duration(0.5s);
-		@include animation-timing-function(ease-out);
-	    }
-
-	    .unfixed & {
-		@include animation-name(slide-back);
-		@include animation-duration(0.5s);
-		@include animation-timing-function(ease-out);
-	    }
+	    @include transition-property(margin-left);
+	    @include transition-duration(0.5s);
+	    @include transition-timing-function(ease-out);
 	}
 
 	@include affixed-navbar {
