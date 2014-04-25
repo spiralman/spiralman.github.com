@@ -26,7 +26,7 @@ something a bit like this:
 def parse_file(filename):
     with open(filename) as file:
         extension = os.path.splitext(filename)[:-1]
-		parser = ParserFactory.build_parser(extension)
+        parser = ParserFactory.build_parser(extension)
 
         document = parser.parse(file)
 
