@@ -120,6 +120,12 @@ makes)."
 	    )
       )
 
+(add-hook 'markdown-mode-hook
+	  '(lambda ()
+	     (auto-fill-mode)
+	     )
+	  )
+
 (add-hook 'scss-mode-hook
 	  '(lambda ()
 	     (set-variable css-indent-offset 2)
