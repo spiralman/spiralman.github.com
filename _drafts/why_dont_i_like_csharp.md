@@ -108,3 +108,59 @@ you do, damned if you don't kind of situation.
 
 (Yes, I know VS afficionados will tell you how much faster it is than
 Eclipse. Talk about faint praise.)
+
+The other problem with Visual Studio is what it does to your code:
+there's no need to organize anything if can just "go to definition;"
+there's no need to keep classes small if autocomplete can find the 1
+method in 100 you were looking for; it's better to keep all the
+projects in one monolithic "Solution File" than try to run multiple
+instances for multiple independent components.
+
+I'd also like to pick one more little nit: build configuration
+management. When I'm defining my configuration, I want to build up a
+set of values for all build types, and then override specific ones for
+individual build types. If I change a default value, I want it to
+change for all builds. If I want to change a value for just one build
+type, I want all other build types to get the default. This is very
+easy to do with an imperative (or even functional) build system:
+
+{% highlight make %}
+CFLAGS=-Wall
+
+ifeq ($(BUILD_TYPE), "DEBUG")
+    CFLAGS=$(CFLAGS) -O0
+endif
+{% endhighlight %}
+
+This is almost impossible to do with Visual Studio's build
+configuration management. You can define default values once, and they
+will get copied when you make a new configuration, but changing them
+in the initial configuration won't change them in the copies. I'm told
+there's some complex feature you can enable that lets you accomplish
+this in their GUI, but if they'd just give you make, or something like
+it, it wouldn't be complex at all. It would be just like writing code!
+
+## Community ##
+
+As I said at the beginning, this one is hard for me to judge, because
+my experience was as much about the team I worked on as the C#
+community at large. I also think that tools like Mono, NuGet and
+Microsoft's semi-open-source initiatives have been improving this
+situation a lot over the last few years.
+
+That being said, writing in C# almost always meant writing a large,
+monolithic application against a SQL database, running on
+Windows. Microsoft's documentation almost invariable includes an
+example of binding whatever language feature they are talking about to
+a `DataTable` from a SQL query. Compilation is done through a GUI,
+configuration is done through a GUI, deployment is done through a GUI,
+everything needs to be a GUI application that you can click, and
+automation is an afterthought that some other team has to worry about.
+
+When it comes down to it, this just isn't the kind of software I want
+to build. I'm certain I could use C# to build software the way I want:
+using small, independent components, automating the development
+workflow, maybe even working entirely from the command line. But, the
+fact of the matter is, I don't want to have to fight the tooling to
+build things the right way, which is fundamentally what I found so
+frustrating about writing C#.
