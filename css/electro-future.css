@@ -1,58 +1,417 @@
-/*
-Syntax error: Incompatible units: 'px' and 'spx'.
-        on line 126 of _sass/electro-future.scss
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
-121:     .affix & {
-122: 	@content;
-123:     }
-124: }
-125: 
-126: $navtitle-width: 148spx + ($box-padding * 2);
-127: 
-128: @mixin color-links($base, $highlight) {
-129:    a {
-130:        color: $base;
-131: 
+.container {
+  *zoom: 1;
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto; }
+  .container:before, .container:after {
+    content: " ";
+    display: table; }
+  .container:after {
+    clear: both; }
 
-Backtrace:
-_sass/electro-future.scss:126
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/script/number.rb:394:in `coercion_factor'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/script/number.rb:325:in `coerce'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/script/number.rb:375:in `operate'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/script/number.rb:97:in `plus'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/script/operation.rb:89:in `_perform'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/script/node.rb:40:in `perform'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/perform.rb:327:in `visit_variable'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/perform.rb:100:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/base.rb:53:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/base.rb:53:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/perform.rb:109:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/perform.rb:121:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/perform.rb:108:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/base.rb:37:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/perform.rb:128:in `visit_root'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/perform.rb:100:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/visitors/perform.rb:7:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/tree/root_node.rb:20:in `render'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/engine.rb:315:in `_render'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/engine.rb:262:in `render'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/plugin/compiler.rb:362:in `update_stylesheet'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/plugin/compiler.rb:203:in `block in update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/plugin/compiler.rb:201:in `each'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/plugin/compiler.rb:201:in `update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/lib/sass/plugin/compiler.rb:283:in `block in watch'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/vendor/listen/lib/listen/multi_listener.rb:108:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/vendor/listen/lib/listen/multi_listener.rb:108:in `on_change'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/vendor/listen/lib/listen/multi_listener.rb:117:in `block in initialize_adapter'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/vendor/listen/lib/listen/adapter.rb:198:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/vendor/listen/lib/listen/adapter.rb:198:in `report_changes'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/vendor/listen/lib/listen/adapter.rb:210:in `poll_changed_dirs'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.2.12/vendor/listen/lib/listen/adapters/darwin.rb:38:in `block in start'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Syntax error: Incompatible units: 'px' and 'spx'.\A         on line 126 of _sass/electro-future.scss\A \A 121:     .affix & {\A 122: 	@content;\A 123:     }\A 124: }\A 125: \A 126: $navtitle-width: 148spx + ($box-padding * 2);\A 127: \A 128: @mixin color-links($base, $highlight) {\A 129:    a {\A 130:        color: $base;\A 131: "; }
+.main-area {
+  *zoom: 1;
+  display: block;
+  display: block;
+  float: left;
+  margin-right: 2.35765%;
+  width: 100%; }
+  .main-area:before, .main-area:after {
+    content: " ";
+    display: table; }
+  .main-area:after {
+    clear: both; }
+  .main-area:last-child {
+    margin-right: 0; }
+  @media screen and (max-width: 768px) {
+    .main-area {
+      display: block;
+      float: left;
+      margin-right: 3.16844%;
+      width: 100%; }
+      .main-area:last-child {
+        margin-right: 0; } }
+  @media screen and (max-width: 480px) {
+    .main-area {
+      display: block;
+      float: left;
+      margin-right: 4.82916%;
+      width: 100%; }
+      .main-area:last-child {
+        margin-right: 0; } }
+
+.content {
+  display: block;
+  float: left;
+  margin-right: 2.35765%;
+  width: 74.41059%;
+  background: #fefcf9;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding: 15px;
+  box-shadow: inset 0 0 10px 5px #f3f3f3; }
+  .content:last-child {
+    margin-right: 0; }
+  @media screen and (max-width: 768px) {
+    .content {
+      display: block;
+      float: left;
+      margin-right: 3.16844%;
+      width: 100%; }
+      .content:last-child {
+        margin-right: 0; } }
+  @media screen and (max-width: 480px) {
+    .content {
+      display: block;
+      float: left;
+      margin-right: 4.82916%;
+      width: 100%; }
+      .content:last-child {
+        margin-right: 0; } }
+  .content pre {
+    background-color: #f6f4f1;
+    border: 1px solid #727475;
+    border-radius: 2px;
+    padding: 10px;
+    overflow: scroll; }
+
+.side-nav {
+  display: block;
+  float: left;
+  margin-right: 2.35765%;
+  width: 23.23176%;
+  background: #fefcf9;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding: 15px;
+  box-shadow: inset 0 0 10px 5px #f3f3f3; }
+  .side-nav:last-child {
+    margin-right: 0; }
+  @media screen and (max-width: 768px) {
+    .side-nav {
+      *zoom: 1;
+      display: block;
+      display: block;
+      float: left;
+      margin-right: 3.16844%;
+      width: 134.38948%;
+      margin-top: 10px; }
+      .side-nav:before, .side-nav:after {
+        content: " ";
+        display: table; }
+      .side-nav:after {
+        clear: both; }
+      .side-nav:last-child {
+        margin-right: 0; } }
+    @media screen and (max-width: 768px) and (max-width: 768px) {
+      .side-nav {
+        display: block;
+        float: left;
+        margin-right: 3.16844%;
+        width: 100%; }
+        .side-nav:last-child {
+          margin-right: 0; } }
+    @media screen and (max-width: 768px) and (max-width: 480px) {
+      .side-nav {
+        display: block;
+        float: left;
+        margin-right: 4.82916%;
+        width: 100%; }
+        .side-nav:last-child {
+          margin-right: 0; } }
+  .side-nav .section .section-title {
+    font-weight: 600;
+    margin-bottom: 5px; }
+  .side-nav .nav-list {
+    list-style: none;
+    padding-left: 10px;
+    margin: 0; }
+
+.navbar-container {
+  *zoom: 1;
+  display: block;
+  display: block;
+  float: left;
+  margin-right: 2.35765%;
+  width: 100%;
+  height: 52px; }
+  .navbar-container:before, .navbar-container:after {
+    content: " ";
+    display: table; }
+  .navbar-container:after {
+    clear: both; }
+  .navbar-container:last-child {
+    margin-right: 0; }
+  @media screen and (max-width: 768px) {
+    .navbar-container {
+      display: block;
+      float: left;
+      margin-right: 3.16844%;
+      width: 100%; }
+      .navbar-container:last-child {
+        margin-right: 0; } }
+  @media screen and (max-width: 480px) {
+    .navbar-container {
+      display: block;
+      float: left;
+      margin-right: 4.82916%;
+      width: 100%; }
+      .navbar-container:last-child {
+        margin-right: 0; } }
+
+.navbar {
+  display: block;
+  float: left;
+  margin-right: 2.35765%;
+  width: 100%;
+  background: #3e3e3e;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  overflow: hidden; }
+  .navbar:last-child {
+    margin-right: 0; }
+  @media screen and (max-width: 768px) {
+    .navbar {
+      display: block;
+      float: left;
+      margin-right: 3.16844%;
+      width: 100%; }
+      .navbar:last-child {
+        margin-right: 0; } }
+  @media screen and (max-width: 480px) {
+    .navbar {
+      display: block;
+      float: left;
+      margin-right: 4.82916%;
+      width: 100%; }
+      .navbar:last-child {
+        margin-right: 0; } }
+  @media screen and (max-width: 768px) {
+    .navbar {
+      position: fixed;
+      top: 0;
+      max-width: 68em; } }
+  .affix .navbar {
+    position: fixed;
+    top: 0;
+    max-width: 68em; }
+  @media screen and (max-width: 768px) {
+    .navbar {
+      max-width: none;
+      right: 8px;
+      left: 8px; } }
+  @media screen and (max-width: 480px) {
+    .navbar {
+      width: auto; } }
+  .navbar a {
+    color: #f6f4f1; }
+    .navbar a:hover {
+      color: #fefcf9; }
+    .navbar a.active {
+      color: #fefcf9; }
+  .navbar .navlist {
+    display: inline-block;
+    list-style: none outside;
+    margin: 0;
+    padding-left: 0; }
+    .navbar .navlist .navbar-item, .navbar .navlist .navbar-title {
+      display: inline;
+      margin-left: 30px; }
+      .navbar .navlist .navbar-item:first-child, .navbar .navlist .navbar-title:first-child {
+        margin-left: 15px; }
+    @media screen and (max-width: 480px) {
+      .navbar .navlist {
+        *zoom: 1;
+        display: block;
+        overflow: hidden;
+        position: relative;
+        top: 12px;
+        padding-left: 15px;
+        padding-right: 15px;
+        background-color: #717171;
+        height: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        -webkit-transition-property: height, padding-top, padding-bottom;
+        -moz-transition-property: height, padding-top, padding-bottom;
+        transition-property: height, padding-top, padding-bottom;
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+        -webkit-transition-timing-function: ease-out;
+        -moz-transition-timing-function: ease-out;
+        transition-timing-function: ease-out; }
+        .navbar .navlist:before, .navbar .navlist:after {
+          content: " ";
+          display: table; }
+        .navbar .navlist:after {
+          clear: both; }
+        .navbar .navlist .navbar-item {
+          display: list-item;
+          text-align: right; }
+        .navbar .navlist.menu-shown {
+          height: 86px;
+          padding-top: 10px;
+          padding-bottom: 10px; } }
+  .navbar .navbar-title {
+    background: #fefcf9;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    padding: 15px;
+    box-shadow: inset 0 0 10px 5px #f3f3f3;
+    margin-left: -178px;
+    padding: 4px 15px;
+    font-weight: 600; }
+    .navbar .navbar-title a {
+      color: #0c0c10; }
+      .navbar .navbar-title a:hover {
+        color: #0c0c10; }
+      .navbar .navbar-title a.active {
+        color: #0c0c10; }
+    @media screen and (min-width: 769px) {
+      .navbar .navbar-title {
+        -webkit-transition-property: margin-left;
+        -moz-transition-property: margin-left;
+        transition-property: margin-left;
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+        -webkit-transition-timing-function: ease-out;
+        -moz-transition-timing-function: ease-out;
+        transition-timing-function: ease-out; } }
+    @media screen and (max-width: 768px) {
+      .navbar .navbar-title {
+        margin-left: 0; } }
+    .affix .navbar .navbar-title {
+      margin-left: 0; }
+  .navbar .navbar-menu {
+    display: none; }
+    @media screen and (max-width: 480px) {
+      .navbar .navbar-menu {
+        float: right;
+        display: inline-block;
+        margin-top: -4px;
+        max-height: 22px;
+        min-width: 22px;
+        color: #fefcf9;
+        font-weight: 800;
+        font-size: 16pt;
+        cursor: pointer; } }
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #3e3e3e;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3e3e3e), color-stop(50%, #727475), color-stop(100%, #3e3e3e));
+  background-image: -webkit-linear-gradient(-360deg, #3e3e3e, #727475, #3e3e3e);
+  background-image: linear-gradient(90deg,#3e3e3e, #727475, #3e3e3e);
+  color: #0c0c10;
+  margin: 8; }
+
+a {
+  color: #538ea4;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: underline; }
+
+.heading {
+  *zoom: 1;
+  display: block;
+  display: block;
+  float: left;
+  margin-right: 2.35765%;
+  width: 100%;
+  background: #fefcf9;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  padding: 15px;
+  box-shadow: inset 0 0 10px 5px #f3f3f3;
+  padding-left: 60px; }
+  .heading:before, .heading:after {
+    content: " ";
+    display: table; }
+  .heading:after {
+    clear: both; }
+  .heading:last-child {
+    margin-right: 0; }
+  @media screen and (max-width: 768px) {
+    .heading {
+      display: block;
+      float: left;
+      margin-right: 3.16844%;
+      width: 100%; }
+      .heading:last-child {
+        margin-right: 0; } }
+  @media screen and (max-width: 480px) {
+    .heading {
+      display: block;
+      float: left;
+      margin-right: 4.82916%;
+      width: 100%; }
+      .heading:last-child {
+        margin-right: 0; } }
+  .heading .title {
+    font-size: 4em;
+    font-weight: 800;
+    margin-bottom: 10px; }
+  .heading .subtitle {
+    font-size: 1.5em;
+    font-style: italic;
+    margin-top: 0px; }
+  @media screen and (max-width: 768px) {
+    .heading {
+      display: none; } }
+
+footer {
+  *zoom: 1;
+  display: block;
+  display: block;
+  float: left;
+  margin-right: 2.35765%;
+  width: 100%;
+  margin-top: 10px;
+  color: #fefcf9; }
+  footer:before, footer:after {
+    content: " ";
+    display: table; }
+  footer:after {
+    clear: both; }
+  footer:last-child {
+    margin-right: 0; }
+  @media screen and (max-width: 768px) {
+    footer {
+      display: block;
+      float: left;
+      margin-right: 3.16844%;
+      width: 100%; }
+      footer:last-child {
+        margin-right: 0; } }
+  @media screen and (max-width: 480px) {
+    footer {
+      display: block;
+      float: left;
+      margin-right: 4.82916%;
+      width: 100%; }
+      footer:last-child {
+        margin-right: 0; } }
+  footer a {
+    color: #f1cfaa; }
+
+.page-header {
+  border-bottom: 1px solid #727475; }
+  .page-header h1 {
+    font-size: 2.25em;
+    margin-bottom: 10px; }
+    .page-header h1 small {
+      display: block;
+      color: rgba(12, 12, 16, 0.7);
+      font-size: 0.5em;
+      font-weight: 400;
+      margin-top: 5px;
+      margin-left: 0px; }
