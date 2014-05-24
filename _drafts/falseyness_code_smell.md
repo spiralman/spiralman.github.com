@@ -106,6 +106,13 @@ false people in line at the checkout!" Similarly, if somebody were to
 ask you "What Faberge eggs do you have?" you would probably not answer
 "false."
 
+For things like strings and lists, I would actually rather have an
+`empty` function, which abstracts away the concept of a length
+of 0. This is especially useful when length isn't as well defined: is
+the length of a Unicode string the number of characters, or bytes? Is
+the length of a node in a tree the number of direct children, or all
+children?
+
 ## Code complexity ##
 
 The next complaint leveled against me was that my code was "more
@@ -228,3 +235,88 @@ special-case whether the match was successful or not if it isn't
 relevant to their code.
 
 ## Avoiding sentinel values ##
+
+Which leads to the title of this post, which is that treating values
+as falsey is often a code smell that you might be doing something else
+wrong.
+
+Let's consider a (very abridged) version of the code that initially
+started the discussion with my coworkers. The idea was that a function
+was returning a list of URLs which would ultimately be sent back to a
+client browser. In certain situations, in order to work around bugs in
+older OSes, we wanted to downgrade the connection from HTTPS to HTTP
+(when the initial request was already over HTTP). The code looked
+something like this:
+
+{% highlight python %}
+def gather_urls(resource_ids, protocol_override=None):
+    resources = db.get_resources(resource_ids)
+    resource_urls = []
+
+    for resource in resources:
+        url = resource.get_url()
+
+        if protocol_override:
+            url = replace_protocol(protocol_override, url)
+
+        resource_urls.append(url)
+
+    return resource_urls
+{% endhighlight %}
+
+The line in contention was the `if protocol_override`, of course. The
+code calling this function determined if the protocol needed to be
+overridden, otherwise this function should return the pre-configured
+URLs for the resources.
+
+The smell here is that this code has to be told whether or not to
+override the URLs at all, something it isn't particularly concerned
+with (it was actually gathering more than just URLs from the
+resources). Instead of even needing to check whether the protocol
+needs to be overridden (the responsibility of other code), the code
+could be rewritten like this:
+
+{% highlight python %}
+def identity_filter(url):
+    return url
+
+def force_protocol(protocol, url):
+    return replace_protocol(protocol, url)
+
+force_http = partial(force_protocol, 'http')
+
+
+def gather_urls(resource_ids, url_filter=identity_filter):
+    # ...
+    url = url_filter(url)
+    # ...
+{% endhighlight %}
+
+This code has a few advantages over the previous implementation:
+first, the decision of whether or not to override the protocol is
+completely up to the calling code, with no conditionals. Second, how
+you actually change the URL has been moved out of the function, so
+other URL filters can be constructed, or you could even chain filters
+together.
+
+Hidden behind the falsey check in the first version was actually a
+sentinel value, `None`, which pointed to a larger problem with the
+implementation. Most falsey checks are really checks for a particular
+falsey value (or maybe a couple falsey values), which all send the
+code down a different code path.
+
+## Style ##
+
+In the end, most of this comes down to personal preference. Except for
+a few corner cases, where the programmer doesn't anticipate a
+particular falsey value being passed in, both styles of code are
+correct.
+
+To me, the implicit check for falsey values reads like a number
+without a unit. The programmer is probably checking for a particular
+value, but just left it off as short-hand. I find it aggravatingly
+terse, and I have to stop and think what the programmer meant. If I'm
+debugging a problem with a particular input, I have to consider what
+the current value is, whether it would evaluate as false, and whether
+that is the correct behavior. Just spelling out what you mean seems so
+much simpler.
