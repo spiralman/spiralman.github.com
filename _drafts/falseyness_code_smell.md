@@ -318,5 +318,21 @@ value, but just left it off as short-hand. I find it aggravatingly
 terse, and I have to stop and think what the programmer meant. If I'm
 debugging a problem with a particular input, I have to consider what
 the current value is, whether it would evaluate as false, and whether
-that is the correct behavior. Just spelling out what you mean seems so
-much simpler.
+that is the correct behavior.
+
+This is more difficult if you have to switch back-and-forth between
+languages often, because not all languages interpret the same values
+as falsey. For example, in Perl, `"0"` is falsey, but `"0.0"` is not
+(of course!). There is something to be said for taking full advantage
+of the language you're using (instead of limiting yourself to the
+least common denominator of all languages), but relying on certain
+esoteric, and implicit, rules might make the code more difficult to
+maintain without any clear advantage.
+
+Expressiveness is often used as an argument for allowing falseyness,
+and it's certainly more expressive of a language to allow values to be
+falsey. However, there is a difference between expressiveness and
+clarity: just because a language allows you to express the phrase "if
+this list is false" does not mean that that is the clearest means of
+expressing what you actually mean ("if this list is empty," or,
+better, "if there are no apples").
