@@ -6,6 +6,10 @@
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.milkbox.net/packages/"))
 
+(add-to-list 'load-path "~/.emacs.d/elisp")
+
+(require 'llvm-mode)
+
 (show-paren-mode 1)
 
 (setq exec-path (append exec-path '("~/bin" "/usr/local/bin")))
