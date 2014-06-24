@@ -8,7 +8,9 @@
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
 
-(require 'llvm-mode)
+(if (file-exists-p (concat "~/.emacs.d/elisp/" "llvm-mode.el"))
+    (require 'llvm-mode)
+  )
 
 (show-paren-mode 1)
 
