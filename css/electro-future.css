@@ -79,6 +79,13 @@
     border-radius: 2px;
     padding: 10px;
     overflow: scroll; }
+  .content blockquote {
+    background-color: #f6f4f1;
+    border: 1px solid #727475;
+    border-radius: 2px;
+    padding: 10px;
+    overflow: scroll;
+    font-style: italic; }
 
 .side-nav {
   display: block;

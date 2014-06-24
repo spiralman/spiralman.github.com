@@ -86,6 +86,11 @@ $body-margin: 8px;
     pre {
 	@include inner-box();
     }
+
+    blockquote {
+	@include inner-box();
+	font-style: italic;
+    }
 }
 
 .side-nav {
