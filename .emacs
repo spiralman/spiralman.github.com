@@ -37,12 +37,12 @@
            (directory-file-name dir-name)))
   )
 
-(setq-default highlight-80+-columns 79)
+(setq column-enforce-column 79)
 
 ;; minor modes used in *any* major mode
 (add-hook 'after-change-major-mode-hook
 	  (lambda ()
-	    (highlight-80+-mode)
+	    (column-enforce-mode)
 	    (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 	    ))
 
@@ -129,6 +129,7 @@ makes)."
 (add-hook 'markdown-mode-hook
 	  '(lambda ()
 	     (auto-fill-mode)
+	     (flyspell-mode)
 	     )
 	  )
 
@@ -145,13 +146,17 @@ makes)."
 	     )
 	  )
 
+;; Useful Python stuff
+(fset 'mock-patch
+   "@mock.patch(\"\", autospec=True)\C-[b\C-[b\C-b\C-b\C-b")
+
 (add-hook 'python-mode-hook
 	  '(lambda ()
 	     (local-set-key (kbd "C-<") 'python-indent-shift-left)
 	     (local-set-key (kbd "C->") 'python-indent-shift-right)
 	     (flymake-mode)
-	     (make-local-variable 'highlight-80+-columns)
-	     (setq highlight-80+-columns 99)
+	     (setq column-enforce-column 99)
+	     (local-set-key (kbd "C-c p") `mock-patch)
 	     ))
 
 ;; requires puppet-mode
