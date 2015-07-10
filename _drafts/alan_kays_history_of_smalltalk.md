@@ -4,7 +4,12 @@ layout: post
 tags: coding
 ---
 
-http://worrydream.com/EarlyHistoryOfSmalltalk/
+Alan Kay's
+[Early History of Smalltalk](http://worrydream.com/EarlyHistoryOfSmalltalk/),
+from 1993, bubbled up on Hacker News, and it has so many interesting
+points I found interesting to discuss. Hopefully my thoughts are of
+interest. I highly recommend reading the article, which is quite long,
+when you have the time.
 
 > New ideas go through stages of acceptance, both from within and
 > without. From within, the sequence moves from "barely seeing" a
