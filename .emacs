@@ -12,6 +12,10 @@
     (require 'llvm-mode)
   )
 
+(if (file-exists-p (concat "~/.emacs.d/elisp/" "org-s5.el"))
+    (require 'org-s5)
+  )
+
 (show-paren-mode 1)
 
 (setq exec-path (append exec-path '("~/bin" "/usr/local/bin")))
@@ -25,9 +29,6 @@
 (setq path-to-ctags "/usr/local/bin/ctags")
 
 (setq temporary-file-directory "~/.emacs.d/tmp")
-
-(fset 'markdown-slide
-   "<section>\C-m<div markdown=\"1\">\C-m\C-m</div>\C-m</section>\C-[OA\C-[OA\C-m\C-m\C-[OA")
 
 (defun create-tags (dir-name)
   "Create tags file"
@@ -116,6 +117,9 @@ makes)."
 	       '("\\.js\\'" flymake-jsl-init))
   )
 
+(fset 'insert-markdown-slide
+   "{% slide %}\C-m\C-m{% endslide %}\C-m\C-p\C-p\C-m\C-m\C-p")
+
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
 (setq auto-mode-alist
@@ -130,6 +134,7 @@ makes)."
 	  '(lambda ()
 	     (auto-fill-mode)
 	     (flyspell-mode)
+	     (local-set-key (kbd "C-c s") `insert-markdown-slide)
 	     )
 	  )
 
@@ -146,6 +151,12 @@ makes)."
 	     )
 	  )
 
+;; Enable flymake minor mode, with custom keybindings
+(defun enable-flymake ()
+  (flymake-mode)
+  (local-set-key (kbd "M-n") `flymake-goto-next-error)
+  (local-set-key (kbd "M-p") `flymake-goto-prev-error))
+
 ;; Useful Python stuff
 (fset 'mock-patch
    "@mock.patch(\"\", autospec=True)\C-[b\C-[b\C-b\C-b\C-b")
@@ -154,7 +165,7 @@ makes)."
 	  '(lambda ()
 	     (local-set-key (kbd "C-<") 'python-indent-shift-left)
 	     (local-set-key (kbd "C->") 'python-indent-shift-right)
-	     (flymake-mode)
+	     (enable-flymake)
 	     (setq column-enforce-column 99)
 	     (local-set-key (kbd "C-c p") `mock-patch)
 	     ))
@@ -178,7 +189,7 @@ makes)."
 	  (lambda ()
 	    (setq js2-basic-offset 2)
       (set-variable 'indent-tabs-mode nil)
-      (flymake-mode)))
+      (enable-flymake)))
 
 (setq indent-tabs-mode nil)
 (setq tab-width 2)
