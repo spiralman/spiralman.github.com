@@ -97,24 +97,12 @@ makes)."
 			(file-name-directory buffer-file-name))))
       (list "pycheckers" (list local-file))))
 
-  (defun flymake-jsl-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		       'flymake-create-temp-intemp))
-	   (local-file (file-relative-name
-			temp-file
-			(file-name-directory buffer-file-name))))
-      (list "jsl" (list "--nologo" "--nosummary" "--nofilelisting" "--conf"
-                        (find-root-file "jsl.conf" (file-name-directory buffer-file-name))
-                        local-file )
-            )
-      )
-    )
-
   (add-to-list 'flymake-allowed-file-name-masks
 	       '("\\.py\\'" flymake-pycheck-init))
 
+  (require 'flymake-eslint)
   (add-to-list 'flymake-allowed-file-name-masks
-	       '("\\.js\\'" flymake-jsl-init))
+	       '("\\.js\\'" flymake-eslint-load))
   )
 
 (fset 'insert-markdown-slide
@@ -191,9 +179,27 @@ makes)."
       (set-variable 'indent-tabs-mode nil)
       (enable-flymake)))
 
-(setq indent-tabs-mode nil)
-(setq tab-width 2)
-(setq js-indent-level 2)
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.react.js$" . web-mode))
+
+(setq web-mode-content-types-alist
+      '(("jsx" . "\\.react.js$")))
+
+(setq-default web-mode-markup-indent-offset 2)
+(setq-default web-mode-code-indent-offset 2)
+(setq-default web-mode-css-indent-offset 2)
+(setq-default web-mode-attr-indent-offset 2)
+
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (or (equal web-mode-content-type "jsx")
+          (equal web-mode-content-type ".react.js"))
+      (let ((web-mode-enable-part-face nil))
+        ad-do-it)
+    ad-do-it))
+
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq-default js-indent-level 2)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
