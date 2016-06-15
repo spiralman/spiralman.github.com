@@ -176,6 +176,7 @@ makes)."
 (add-hook 'js2-mode-hook
 	  (lambda ()
 	    (setq js2-basic-offset 2)
+      (setq column-enforce-column 99)
       (set-variable 'indent-tabs-mode nil)
       (enable-flymake)))
 
@@ -189,6 +190,12 @@ makes)."
 (setq-default web-mode-code-indent-offset 2)
 (setq-default web-mode-css-indent-offset 2)
 (setq-default web-mode-attr-indent-offset 2)
+
+(add-hook 'web-mode-hook
+          (lambda ()
+            	     (setq column-enforce-column 99)
+                   (add-to-list 'web-mode-comment-formats '("jsx" . "//" ))
+                   (add-to-list 'web-mode-comment-formats '("javascript" . "//" ))))
 
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (or (equal web-mode-content-type "jsx")
