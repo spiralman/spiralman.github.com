@@ -101,8 +101,13 @@ makes)."
 	       '("\\.py\\'" flymake-pycheck-init))
 
   (require 'flymake-eslint)
+  (let ((local-eslint (file-truename "./node_modules/.bin/eslint")))
+        (if (file-executable-p local-eslint)
+            (set-variable 'flymake-eslint-executable local-eslint)))
   (add-to-list 'flymake-allowed-file-name-masks
-	       '("\\.js\\'" flymake-eslint-load))
+               '("\\.js\\'" flymake-eslint-load))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.html\\'" flymake-eslint-load))
   )
 
 (fset 'insert-markdown-slide
@@ -182,6 +187,7 @@ makes)."
 
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.react.js$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
 
 (setq web-mode-content-types-alist
       '(("jsx" . "\\.react.js$")))
@@ -195,7 +201,8 @@ makes)."
           (lambda ()
             	     (setq column-enforce-column 99)
                    (add-to-list 'web-mode-comment-formats '("jsx" . "//" ))
-                   (add-to-list 'web-mode-comment-formats '("javascript" . "//" ))))
+                   (add-to-list 'web-mode-comment-formats '("javascript" . "//" ))
+                   (enable-flymake)))
 
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (or (equal web-mode-content-type "jsx")
