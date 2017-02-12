@@ -100,14 +100,15 @@ makes)."
   (add-to-list 'flymake-allowed-file-name-masks
 	       '("\\.py\\'" flymake-pycheck-init))
 
-  (require 'flymake-eslint)
-  (let ((local-eslint (file-truename "./node_modules/.bin/eslint")))
-        (if (file-executable-p local-eslint)
-            (set-variable 'flymake-eslint-executable local-eslint)))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.js\\'" flymake-eslint-load))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.html\\'" flymake-eslint-load))
+  (when (require 'flymake-eslint nil :noerror)
+    (require 'flymake-eslint)
+    (let ((local-eslint (file-truename "./node_modules/.bin/eslint")))
+      (if (file-executable-p local-eslint)
+	  (set-variable 'flymake-eslint-executable local-eslint)))
+    (add-to-list 'flymake-allowed-file-name-masks
+		 '("\\.js\\'" flymake-eslint-load))
+    (add-to-list 'flymake-allowed-file-name-masks
+		 '("\\.html\\'" flymake-eslint-load)))
   )
 
 (fset 'insert-markdown-slide
