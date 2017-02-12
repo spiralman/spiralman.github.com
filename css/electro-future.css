@@ -50,10 +50,10 @@
   float: left;
   margin-right: 2.35765%;
   width: 74.41059%;
-  background: #fefcf9;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   padding: 15px;
+  background: #fefcf9;
   box-shadow: inset 0 0 10px 5px #f3f3f3; }
   .content:last-child {
     margin-right: 0; }
@@ -94,10 +94,10 @@
   float: left;
   margin-right: 2.35765%;
   width: 23.23176%;
-  background: #fefcf9;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   padding: 15px;
+  background: #fefcf9;
   box-shadow: inset 0 0 10px 5px #f3f3f3; }
   .side-nav:last-child {
     margin-right: 0; }
@@ -268,12 +268,12 @@
           padding-top: 10px;
           padding-bottom: 10px; } }
   .navbar .navbar-title {
-    background: #fefcf9;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     padding: 15px;
+    background: #fefcf9;
     box-shadow: inset 0 0 10px 5px #f3f3f3;
     margin-left: -178px;
     padding: 4px 15px;
@@ -336,11 +336,12 @@ a {
   float: left;
   margin-right: 2.35765%;
   width: 100%;
-  background: #fefcf9;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   padding: 15px;
-  box-shadow: inset 0 0 10px 5px #f3f3f3;
+  background: #0c0c10;
+  box-shadow: inset 0 0 10px 5px rgba(12, 12, 16, 0.2);
+  color: #fefcf9;
   padding-left: 60px; }
   .heading:before, .heading:after {
     content: " ";
@@ -365,6 +366,10 @@ a {
       width: 100%; }
       .heading:last-child {
         margin-right: 0; } }
+  @media screen and (min-width: 769px) {
+    .heading {
+      background-image: url("/img/international-style-header.jpeg");
+      background-size: cover; } }
   .heading .title {
     font-size: 4em;
     font-weight: 800;

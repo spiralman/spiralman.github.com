@@ -25,9 +25,7 @@ $complement-highlight: #AADEF1;
 $box-padding: 15px;
 $body-margin: 8px;
 
-@mixin content-box($rounded: both) {
-  background: $white;
-
+@mixin content-box($rounded: both, $color: light) {
   @if $rounded == top or $rounded == both  {
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
@@ -39,7 +37,15 @@ $body-margin: 8px;
   }
 
   padding: $box-padding;
-  box-shadow: inset 0 0 10px 5px lighten($light, 50%);
+
+  @if $color == light {
+    background: $white;
+    box-shadow: inset 0 0 10px 5px lighten($light, 50%);
+  }
+  @else {
+    background: $black;
+    box-shadow: inset 0 0 10px 5px rgba($gray, 0.2);
+  }
 }
 
 @mixin inner-box {
@@ -289,7 +295,13 @@ a {
 .heading {
   @include row();
   @include full-width();
-  @include content-box(top);
+  @include content-box(top, dark);
+
+  @include media($desktop-only) {
+    background-image: url("/img/international-style-header.jpeg");
+    background-size: cover;
+  }
+  color: $white;
   padding-left: 60px;
 
   .title {
