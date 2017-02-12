@@ -91,6 +91,10 @@ $body-margin: 8px;
     @include inner-box();
     font-style: italic;
   }
+
+  img {
+    max-width: 100%;
+  }
 }
 
 .side-nav {

@@ -86,6 +86,8 @@
     padding: 10px;
     overflow: scroll;
     font-style: italic; }
+  .content img {
+    max-width: 100%; }
 
 .side-nav {
   display: block;
