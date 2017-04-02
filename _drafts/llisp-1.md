@@ -1,7 +1,7 @@
 ---
 title: Writing a Lisp in LLVM IR - Part 1
 layout: post
-tags: coding
+tags: coding, llisp
 ---
 
 For a few years now, I've been working, in fits and starts, on a
@@ -311,7 +311,7 @@ instructions.
 Don't worry, though! Now that we have our trusty cons cell, things
 will get easier. In fact, you've already seen a taste of that: for our
 "shortcut" to `cons` two values, we just had to call `cons` twice and
-return the result.
+return the result. It almost looks like C.
 
-Next, when we move into the reader, we'll see how we can build
+Next, when we move on to the reader, we'll see how we can build
 something even more complicated without getting too lost in the weeds.
