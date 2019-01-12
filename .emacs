@@ -98,17 +98,6 @@
    )
   )
 
-(when (load "flymake" t)
-  (require 'flymake-eslint)
-  (let ((local-eslint (file-truename "./node_modules/.bin/eslint")))
-        (if (file-executable-p local-eslint)
-            (set-variable 'flymake-eslint-executable local-eslint)))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.js\\'" flymake-eslint-load))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.html\\'" flymake-eslint-load))
-  )
-
 (defun insert-markdown-slide ()
   "Inserts a markdown slide; optionally around the current active region"
   (interactive)

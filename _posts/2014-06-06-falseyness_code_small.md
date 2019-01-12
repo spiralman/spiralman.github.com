@@ -101,10 +101,10 @@ if not things:
 In both of these cases, the language of your domain is lists of things
 (possibly already lower level than you would ideally be writing), and
 it does not make sense to consider the length, or the array itself, as
-false. I tell my wife "The grocery shopping went fast, there were
-false people in line at the checkout!" Similarly, if somebody were to
-ask you "What Faberge eggs do you have?" you would probably not answer
-"false."
+false. I don't tell my wife "The grocery shopping went fast, there
+were false people in line at the checkout!" Similarly, if somebody
+were to ask you "What Faberge eggs do you have?" you would probably
+not answer "false."
 
 For things like strings and lists, I would actually rather have an
 `empty` function, which abstracts away the concept of a length

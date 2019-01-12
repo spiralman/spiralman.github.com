@@ -25,314 +25,331 @@ $complement-highlight: #AADEF1;
 $box-padding: 15px;
 $body-margin: 8px;
 
-@mixin content-box($rounded: both) {
+@mixin content-box($rounded: both, $color: light) {
+  @if $rounded == top or $rounded == both  {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+  }
+
+  @if $rounded == bottom or $rounded == both  {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+
+  padding: $box-padding;
+
+  @if $color == light {
     background: $white;
-
-    @if $rounded == top or $rounded == both  {
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
-    }
-
-    @if $rounded == bottom or $rounded == both  {
-	border-bottom-left-radius: 2px;
-	border-bottom-right-radius: 2px;
-    }
-
-    padding: $box-padding;
     box-shadow: inset 0 0 10px 5px lighten($light, 50%);
+  }
+  @else {
+    background: $black;
+    box-shadow: inset 0 0 10px 5px rgba($gray, 0.2);
+  }
 }
 
 @mixin inner-box {
-    background-color: $faded;
-    border: 1px solid $light;
-    border-radius: 2px;
-    padding: 10px;
-    overflow: scroll;
+  background-color: $faded;
+  border: 1px solid $light;
+  border-radius: 2px;
+  padding: 10px;
+  overflow: scroll;
 }
 
 @mixin full-width {
-    @include span-columns(12);
+  @include span-columns(12);
 
-    @include media($tablet) {
-	@include span-columns(9);
-    }
+  @include media($tablet) {
+    @include span-columns(9);
+  }
 
-    @include media($mobile) {
-	@include span-columns(6);
-    }
+  @include media($mobile) {
+    @include span-columns(6);
+  }
 }
 
 .container {
-    @include outer-container;
+  @include outer-container;
 }
 
 .main-area {
-    @include row();
-    @include full-width();
+  @include row();
+  @include full-width();
 }
 
 .content {
+  @include span-columns(9);
+  @include content-box(bottom);
+
+  @include media($tablet) {
     @include span-columns(9);
-    @include content-box(bottom);
+  }
 
-    @include media($tablet) {
-	@include span-columns(9);
-    }
+  @include media($mobile) {
+    @include span-columns(6);
+  }
 
-    @include media($mobile) {
-	@include span-columns(6);
-    }
+  pre {
+    @include inner-box();
+  }
 
-    pre {
-	@include inner-box();
-    }
+  blockquote {
+    @include inner-box();
+    font-style: italic;
+  }
 
-    blockquote {
-	@include inner-box();
-	font-style: italic;
-    }
+  img {
+    max-width: 100%;
+  }
 }
 
 .side-nav {
-    @include span-columns(3 of 12);
-    @include content-box(bottom);
+  @include span-columns(3 of 12);
+  @include content-box(bottom);
 
-    @include media($tablet) {
-	@include row();
-	@include full-width();
+  @include media($tablet) {
+    @include row();
+    @include full-width();
 
-	margin-top: 10px;
+    margin-top: 10px;
+  }
+
+  .section {
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 5px;
     }
+  }
 
-    .section {
-	.section-title {
-	    font-weight: 600;
-	    margin-bottom: 5px;
-	}
-    }
-
-    .nav-list {
-	list-style: none;
-	padding-left: 10px;
-	margin: 0;
-    }
+  .nav-list {
+    list-style: none;
+    padding-left: 10px;
+    margin: 0;
+  }
 }
 
 @mixin affixed-navbar {
-    @include media($tablet) {
-	@content;
-    }
+  @include media($tablet) {
+    @content;
+  }
 
-    .affix & {
-	@content;
-    }
+  .affix & {
+    @content;
+  }
 }
 
 $navtitle-width: 148px + ($box-padding * 2);
 
 @mixin color-links($base, $highlight) {
-   a {
-       color: $base;
+  a {
+    color: $base;
 
-       &:hover {
-	   color: $highlight;
-       }
+    &:hover {
+      color: $highlight;
+    }
 
-       &.active {
-	   color: $highlight;
-       }
-   }
+    &.active {
+      color: $highlight;
+    }
+  }
 }
 
 .navbar-container {
-    @include row();
-    @include full-width();
+  @include row();
+  @include full-width();
 
-    height: 52px;
+  height: 52px;
 }
 
 .navbar {
-    @include full-width();
+  @include full-width();
 
-    background: $dark;
-    padding-top: 15px;
-    padding-bottom: 15px;
+  background: $dark;
+  padding-top: 15px;
+  padding-bottom: 15px;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    @include affixed-navbar{
-	position: fixed;
-	top: 0;
-	max-width: $max-width;
-    }
+  @include affixed-navbar{
+    position: fixed;
+    top: 0;
+    max-width: $max-width;
+  }
 
-    @include media($tablet) {
-	max-width: none;
-	right: 8px;
-	left: 8px;
+  @include media($tablet) {
+    max-width: none;
+    right: 8px;
+    left: 8px;
+  }
+
+  @include media($mobile) {
+    width: auto;
+  }
+
+  @include color-links($faded, $white);
+
+  .navlist {
+    display: inline-block;
+
+    list-style: none outside;
+    margin: 0;
+    padding-left: 0;
+
+    .navbar-item,.navbar-title {
+      display: inline;
+      margin-left: 30px;
+
+      &:first-child {
+        margin-left: 15px;
+      }
     }
 
     @include media($mobile) {
-	width: auto;
+      @include row();
+      overflow: hidden;
+
+      position: relative;
+      top: 12px;
+
+      padding-left: $box-padding;
+      padding-right: $box-padding;
+
+      background-color: lighten($dark, 20%);
+
+      .navbar-item {
+        display: list-item;
+        text-align: right;
+      }
+
+      height: 0px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+
+      @include transition-property(height, padding-top, padding-bottom);
+      @include transition-duration(0.5s);
+      @include transition-timing-function(ease-out);
+
+      &.menu-shown {
+        height: 86px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+
+  .navbar-title {
+    @include content-box();
+
+    @include color-links($black, $black);
+
+    margin-left: -$navtitle-width;
+    padding: 4px $box-padding;
+    font-weight: 600;
+
+    @include media($desktop-only) {
+      @include transition-property(margin-left);
+      @include transition-duration(0.5s);
+      @include transition-timing-function(ease-out);
     }
 
-    @include color-links($faded, $white);
-
-    .navlist {
-	display: inline-block;
-
-	list-style: none outside;
-	margin: 0;
-	padding-left: 0;
-
-	.navbar-item,.navbar-title {
-	    display: inline;
-	    margin-left: 30px;
-
-	    &:first-child {
-		margin-left: 15px;
-	    }
-	}
-
-	@include media($mobile) {
-	    @include row();
-	    overflow: hidden;
-
-	    position: relative;
-	    top: 12px;
-
-	    padding-left: $box-padding;
-	    padding-right: $box-padding;
-
-	    background-color: lighten($dark, 20%);
-
-	    .navbar-item {
-		display: list-item;
-		text-align: right;
-	    }
-
-	    height: 0px;
-	    padding-top: 0px;
-	    padding-bottom: 0px;
-
-	    @include transition-property(height, padding-top, padding-bottom);
-	    @include transition-duration(0.5s);
-	    @include transition-timing-function(ease-out);
-
-	    &.menu-shown {
-		height: 86px;
-		padding-top: 10px;
-		padding-bottom: 10px;
-	    }
-	}
+    @include affixed-navbar {
+      margin-left: 0;
     }
+  }
 
-    .navbar-title {
-	@include content-box();
+  .navbar-menu {
+    display: none;
 
-	@include color-links($black, $black);
+    @include media($mobile) {
+      float: right;
+      display: inline-block;
+      margin-top: -4px;
+      max-height: 22px;
+      min-width: 22px;
 
-	margin-left: -$navtitle-width;
-	padding: 4px $box-padding;
-	font-weight: 600;
+      color: $white;
 
-	@include media($desktop-only) {
-	    @include transition-property(margin-left);
-	    @include transition-duration(0.5s);
-	    @include transition-timing-function(ease-out);
-	}
+      font-weight: 800;
+      font-size: 16pt;
 
-	@include affixed-navbar {
-	    margin-left: 0;
-	}
+      cursor: pointer;
     }
-
-    .navbar-menu {
-	display: none;
-
-	@include media($mobile) {
-	    float: right;
-	    display: inline-block;
-	    margin-top: -4px;
-	    max-height: 22px;
-	    min-width: 22px;
-
-	    color: $white;
-
-	    font-weight: 800;
-	    font-size: 16pt;
-
-	    cursor: pointer;
-	}
-    }
+  }
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
-    @include linear-gradient(90deg, $dark, $light, $dark);
-    color: $black;
-    margin: 8;
+  font-family: 'Open Sans', sans-serif;
+  @include linear-gradient(90deg, $dark, $light, $dark);
+  color: $black;
+  margin: 8;
 }
 
 a {
-    color: $complement;
-    text-decoration: none;
-    &:hover {
-	text-decoration: underline;
-    }
+  color: $complement;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .heading {
-    @include row();
-    @include full-width();
-    @include content-box(top);
-    padding-left: 60px;
+  @include row();
+  @include full-width();
+  @include content-box(top, dark);
 
-    .title {
-	font-size: 4em;
-	font-weight: 800;
-	margin-bottom: 10px;
-    }
+  @include media($desktop-only) {
+    background-image: url("/img/international-style-header.jpeg");
+    background-size: cover;
+  }
+  color: $white;
+  text-shadow: 0 0 5px rgba($gray, 0.2);
+  padding-left: 60px;
 
-    .subtitle {
-	font-size: 1.5em;
-	font-style: italic;
-	margin-top: 0px;
-    }
+  .title {
+    font-size: 4em;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
 
-    @include media($tablet) {
-	display: none;
-    }
+  .subtitle {
+    font-size: 1.5em;
+    font-style: italic;
+    margin-top: 0px;
+  }
+
+  @include media($tablet) {
+    display: none;
+  }
 }
 
 footer {
-    @include row();
-    @include full-width();
-    margin-top: 10px;
-    color: $white;
+  @include row();
+  @include full-width();
+  margin-top: 10px;
+  color: $white;
 
-    a {
-	color: $highlight;
-    }
+  a {
+    color: $highlight;
+  }
 }
 
 .page-header {
-    border-bottom: 1px solid $light;
+  border-bottom: 1px solid $light;
 
-    h1 {
-	font-size: 2.25em;
-	margin-bottom: 10px;
+  h1 {
+    font-size: 2.25em;
+    margin-bottom: 10px;
 
-	small {
-	    display: block;
+    small {
+      display: block;
 
-	    color: $gray;
+      color: $gray;
 
-	    font-size: 0.5em;
-	    font-weight: 400;
+      font-size: 0.5em;
+      font-weight: 400;
 
-	    margin-top: 5px;
-	    margin-left: 0px;
-	}
+      margin-top: 5px;
+      margin-left: 0px;
     }
+  }
 }
