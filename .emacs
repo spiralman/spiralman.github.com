@@ -1,6 +1,9 @@
 (require 'package)
 (package-initialize)
 
+(setq c-default-style "linux"
+      c-basic-offset 2)
+
 (add-to-list 'package-archives
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives
@@ -20,10 +23,44 @@
 
 (setq exec-path (append exec-path '("~/bin" "/usr/local/bin")))
 
+(global-flycheck-mode)
+
+(defun flycheck-list-errors-only-when-errors ()
+  (if flycheck-current-errors
+      (flycheck-list-errors)
+    (-when-let (buffer (get-buffer flycheck-error-list-buffer))
+      (dolist (window (get-buffer-window-list buffer))
+        (quit-window nil window)))))
+
+(add-hook 'before-save-hook #'flycheck-list-errors-only-when-errors)
+
+(defun lunaryorn-use-js-executables-from-node-modules ()
+  "Set executables of JS checkers from local node modules."
+  (-when-let* ((file-name (buffer-file-name))
+               (root (locate-dominating-file file-name "node_modules"))
+               (module-directory (expand-file-name "node_modules" root)))
+    (pcase-dolist (`(,checker . ,module) '((javascript-jshint . "jshint")
+                                           (javascript-eslint . "eslint")
+                                           (javascript-jscs   . "jscs")))
+      (let ((package-directory (expand-file-name module module-directory))
+            (executable-var (flycheck-checker-executable-variable checker)))
+        (when (file-directory-p package-directory)
+          (set (make-local-variable executable-var)
+               (expand-file-name (concat "bin/" module ".js")
+                                 package-directory)))))))
+
 ;; (icy-mode 1)
 
 ;; Mac/homebrew only?
 (setq-default ispell-program-name "/usr/local/bin/aspell")
+
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+
+(add-hook 'shell-mode 'ansi-color-for-commit-mode-on)
+
+(add-hook 'java-mode-hook
+          (lambda ()
+            (setq c-basic-offset 4)))
 
 ;; Point it straight at homebrew-installed Exuberant ctags
 (setq path-to-ctags "/usr/local/bin/ctags")
@@ -61,45 +98,7 @@
    )
   )
 
-(defun flymake-create-temp-intemp (file-name prefix)
-  "Return file name in temporary directory for checking FILE-NAME.
-This is a replacement for `flymake-create-temp-inplace'. The
-difference is that it gives a file name in
-`temporary-file-directory' instead of the same directory as
-FILE-NAME.
-
-For the use of PREFIX see that function.
-
-Note that not making the temporary file in another directory
-\(like here) will not if the file you are checking depends on
-relative paths to other files \(for the type of checks flymake
-makes)."
-  (unless (stringp file-name)
-    (error "Invalid file-name"))
-  (or prefix
-      (setq prefix "flymake"))
-  (let* ((name (concat
-                (file-name-nondirectory
-                 (file-name-sans-extension file-name))
-                "_" prefix))
-         (ext  (concat "." (file-name-extension file-name)))
-         (temp-name (make-temp-file name nil ext))
-         )
-    (flymake-log 3 "create-temp-intemp: file=%s temp=%s" file-name temp-name)
-    temp-name))
-
 (when (load "flymake" t)
-  (defun flymake-pycheck-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		      'flymake-create-temp-intemp))
-	   (local-file (file-relative-name
-			temp-file
-			(file-name-directory buffer-file-name))))
-      (list "pycheckers" (list local-file))))
-
-  (add-to-list 'flymake-allowed-file-name-masks
-	       '("\\.py\\'" flymake-pycheck-init))
-
   (require 'flymake-eslint)
   (let ((local-eslint (file-truename "./node_modules/.bin/eslint")))
         (if (file-executable-p local-eslint)
@@ -110,8 +109,50 @@ makes)."
                '("\\.html\\'" flymake-eslint-load))
   )
 
-(fset 'insert-markdown-slide
-   "{% slide %}\C-m\C-m{% endslide %}\C-m\C-p\C-p\C-m\C-m\C-p")
+(defun insert-markdown-slide ()
+  "Inserts a markdown slide; optionally around the current active region"
+  (interactive)
+  (if (use-region-p)
+      (progn
+        (save-excursion
+          (goto-char (region-beginning))
+          (insert "{% slide %}\n\n"))
+        (save-excursion
+          (goto-char (region-end))
+          (insert "\n{% endslide %}")))
+    (progn
+        (insert "{% slide %}\n\n{% endslide %}")
+        (forward-line -1))))
+
+(defun insert-markdown-slide-fragment ()
+  "Inserts a markdown slide fragment; optionally around the current active region"
+  (interactive)
+  (if (use-region-p)
+      (progn
+        (save-excursion
+          (goto-char (region-beginning))
+          (insert "{% frag %}\n\n"))
+        (save-excursion
+          (goto-char (region-end))
+          (insert "\n{% endfrag %}")))
+    (progn
+        (insert "{% frag %}\n\n{% endfrag %}")
+        (forward-line -1))))
+
+(defun insert-markdown-note ()
+  "Inserts a markdown note; optionally around the current active region"
+  (interactive)
+  (if (use-region-p)
+      (progn
+        (save-excursion
+          (goto-char (region-beginning))
+          (insert "<aside class=\"notes\" markdown=\"1\">\n\n"))
+        (save-excursion
+          (goto-char (region-end))
+          (insert "\n</aside>")))
+    (progn
+        (insert "<aside class=\"notes\" markdown=\"1\">\n\n</aside>")
+        (forward-line -1))))
 
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
@@ -128,6 +169,8 @@ makes)."
 	     (auto-fill-mode)
 	     (flyspell-mode)
 	     (local-set-key (kbd "C-c s") `insert-markdown-slide)
+	     (local-set-key (kbd "C-c f") `insert-markdown-slide-fragment)
+	     (local-set-key (kbd "C-c n") `insert-markdown-note)
 	     )
 	  )
 
@@ -158,7 +201,7 @@ makes)."
 	  '(lambda ()
 	     (local-set-key (kbd "C-<") 'python-indent-shift-left)
 	     (local-set-key (kbd "C->") 'python-indent-shift-right)
-	     (enable-flymake)
+	     ;; (enable-flymake)
 	     (setq column-enforce-column 99)
 	     (local-set-key (kbd "C-c p") `mock-patch)
 	     ))
@@ -176,18 +219,23 @@ makes)."
 (setq inhibit-splash-screen t)
 
 ;; Requires js2-mode
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js$" . rjsx-mode))
 
 (add-hook 'js2-mode-hook
 	  (lambda ()
 	    (setq js2-basic-offset 2)
       (setq column-enforce-column 99)
       (set-variable 'indent-tabs-mode nil)
-      (enable-flymake)))
+      ;; (enable-flymake)
+      ))
 
-(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.react.js$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . rjsx-mode))
+(add-to-list 'auto-mode-alist '("\\.react.js$" . rjsx-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
+
+(add-hook 'rjsx-mode-hook
+          (lambda ()
+            (lunaryorn-use-js-executables-from-node-modules)))
 
 (setq web-mode-content-types-alist
       '(("jsx" . "\\.react.js$")))
@@ -202,7 +250,8 @@ makes)."
             	     (setq column-enforce-column 99)
                    (add-to-list 'web-mode-comment-formats '("jsx" . "//" ))
                    (add-to-list 'web-mode-comment-formats '("javascript" . "//" ))
-                   (enable-flymake)))
+                   ;; (enable-flymake)
+                   ))
 
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (or (equal web-mode-content-type "jsx")
@@ -219,7 +268,10 @@ makes)."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ispell-local-dictionary "en"))
+ '(ispell-local-dictionary "en")
+ '(package-selected-packages
+   (quote
+    (flycheck graphviz-dot-mode flymake typescript-mode rjsx-mode groovy-mode markdown-mode dockerfile-mode nginx-mode yaml-mode web-mode web-beautify vcl-mode scss-mode puppet-mode markdown-mode+ less-css-mode js2-mode icicles flymake-easy flymake-cursor ess column-enforce-mode coffee-mode clojurescript-mode clojure-mode actionscript-mode))))
 
 (defun replace-random (to-replace)
   (interactive "MTo Replace: ")
@@ -239,3 +291,10 @@ makes)."
      )
     )
   )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(put 'scroll-left 'disabled nil)
