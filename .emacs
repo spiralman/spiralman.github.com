@@ -32,6 +32,9 @@
       (dolist (window (get-buffer-window-list buffer))
         (quit-window nil window)))))
 
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 (add-hook 'before-save-hook #'flycheck-list-errors-only-when-errors)
 
 (defun lunaryorn-use-js-executables-from-node-modules ()
@@ -81,7 +84,6 @@
 (add-hook 'after-change-major-mode-hook
 	  (lambda ()
 	    (column-enforce-mode)
-	    (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 	    ))
 
 (defun find-root-file (name dir)
@@ -257,10 +259,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(flycheck-flake8rc ".flake8")
  '(ispell-local-dictionary "en")
  '(package-selected-packages
    (quote
-    (flycheck graphviz-dot-mode flymake typescript-mode rjsx-mode groovy-mode markdown-mode dockerfile-mode nginx-mode yaml-mode web-mode web-beautify vcl-mode scss-mode puppet-mode markdown-mode+ less-css-mode js2-mode icicles flymake-easy flymake-cursor ess column-enforce-mode coffee-mode clojurescript-mode clojure-mode actionscript-mode))))
+    (rjsx-mode kotlin-mode dart-mode flycheck graphviz-dot-mode groovy-mode dockerfile-mode nginx-mode yaml-mode web-beautify vcl-mode scss-mode puppet-mode markdown-mode+ less-css-mode js2-mode icicles flymake-easy flymake-cursor ess column-enforce-mode coffee-mode clojurescript-mode clojure-mode actionscript-mode))))
 
 (defun replace-random (to-replace)
   (interactive "MTo Replace: ")
