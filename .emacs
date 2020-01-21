@@ -244,6 +244,11 @@
                    ;; (enable-flymake)
                    ))
 
+(add-hook 'clojure-mode-hook
+          (lambda ()
+            (define-clojure-indent
+              (async 1))))
+
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (or (equal web-mode-content-type "jsx")
           (equal web-mode-content-type ".react.js"))
@@ -263,7 +268,8 @@
  '(ispell-local-dictionary "en")
  '(package-selected-packages
    (quote
-    (rjsx-mode kotlin-mode dart-mode flycheck graphviz-dot-mode groovy-mode dockerfile-mode nginx-mode yaml-mode web-beautify vcl-mode scss-mode puppet-mode markdown-mode+ less-css-mode js2-mode icicles flymake-easy flymake-cursor ess column-enforce-mode coffee-mode clojurescript-mode clojure-mode actionscript-mode))))
+    (go-mode web-mode typescript-mode terraform-mode vcl-mode rjsx-mode kotlin-mode dart-mode flycheck graphviz-dot-mode groovy-mode dockerfile-mode nginx-mode yaml-mode web-beautify scss-mode puppet-mode markdown-mode+ less-css-mode js2-mode icicles flymake-easy flymake-cursor ess column-enforce-mode coffee-mode clojurescript-mode clojure-mode actionscript-mode))))
+
 
 (defun replace-random (to-replace)
   (interactive "MTo Replace: ")
