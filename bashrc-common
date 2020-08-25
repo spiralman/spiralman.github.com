@@ -1,0 +1,67 @@
+ms()
+{
+    minikube service --namespace=$2 --format="$1://{{.IP}}:{{.Port}}" $3
+}
+
+show-cert ()
+{
+    local OPENSSL=/usr/local/Cellar/openssl/1.0.2r/bin/openssl
+    if [ -z "$1" ]; then
+        echo "Hostname required" 1>&2;
+    else
+        echo | $OPENSSL s_client -showcerts -servername $1 -connect $1:443 2> /dev/null | $OPENSSL x509 -inform pem -noout -text;
+    fi
+}
+
+clean-git()
+{
+    echo "The following branches will be deleted"
+    git branch --merged | grep -v "\*" | xargs -n 1 echo
+    read -p "Continue? " CONTINUE
+    if [[ $CONTINUE == y* ]]; then
+        git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
+    fi
+}
+
+dpull()
+{
+    PROJECT=${1:-.}
+    grep -Irn "image: .*us.gcr.io" ${PROJECT}/deployment/*.yaml | sed 's/.*image: \(.*\)/\1/' | sort | uniq | xargs -n 1 gcloud docker -- pull
+}
+
+mkv()
+{
+    mkvirtualenv $(basename $PWD) $@
+}
+
+wo()
+{
+    workon $(basename $PWD)
+}
+
+mkp()
+{
+    mkdir -p $1
+    touch $1/__init__.py
+}
+
+auth-gke()
+{
+    KUBECTL_CONTEXT=$(kubectl config current-context)
+    gcloud container clusters --zone us-east1-c get-credentials stage-us-east1-c --project ustudio-stage
+    gcloud container clusters --zone us-east1-c get-credentials production-us-east1-c --project ustudio-production
+    kubectl config use-context "$KUBECTL_CONTEXT"
+}
+
+alias docker-env='eval $(minikube docker-env)'
+
+alias sync-minikube='minikube ssh -- sudo date $(date -u +"%m%d%H%M2020.%S")'
+
+alias "sba=source bin/activate"
+alias "emacs=emacs -nw"
+
+if command -v pyenv 1>/dev/null 2>&1
+then
+    eval "$(pyenv init -)"
+    pyenv virtualenvwrapper
+fi
