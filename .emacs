@@ -5,9 +5,7 @@
       c-basic-offset 2)
 
 (add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.milkbox.net/packages/"))
+	     '("melpa" . "http://melpa.org/packages/"))
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
 
@@ -80,13 +78,13 @@
            (directory-file-name dir-name)))
   )
 
-(setq column-enforce-column 79)
+;; (setq column-enforce-column 79)
 
 ;; minor modes used in *any* major mode
-(add-hook 'after-change-major-mode-hook
-	  (lambda ()
-	    (column-enforce-mode)
-	    ))
+;; (add-hook 'after-change-major-mode-hook
+;; 	  (lambda ()
+;; 	    (column-enforce-mode)
+;; 	    ))
 
 (defun find-root-file (name dir)
   (car
