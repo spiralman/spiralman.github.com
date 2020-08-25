@@ -25,6 +25,8 @@
 
 (global-flycheck-mode)
 
+;; (flycheck-add-next-checker 'python-flake8 'python-mypy)
+
 (defun flycheck-list-errors-only-when-errors ()
   (if flycheck-current-errors
       (flycheck-list-errors)
