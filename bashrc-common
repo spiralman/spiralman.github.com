@@ -58,10 +58,11 @@ alias docker-env='eval $(minikube docker-env)'
 alias sync-minikube='minikube ssh -- sudo date $(date -u +"%m%d%H%M2020.%S")'
 
 alias "sba=source bin/activate"
-alias "emacs=emacs -nw"
 
 if command -v pyenv 1>/dev/null 2>&1
 then
     eval "$(pyenv init -)"
     pyenv virtualenvwrapper
 fi
+
+export EDITOR=emacs
