@@ -82,13 +82,13 @@
            (directory-file-name dir-name)))
   )
 
-;; (setq column-enforce-column 79)
+(setq column-enforce-column 79)
 
 ;; minor modes used in *any* major mode
-;; (add-hook 'after-change-major-mode-hook
-;; 	  (lambda ()
-;; 	    (column-enforce-mode)
-;; 	    ))
+(add-hook 'prog-mode-hook
+	        (lambda ()
+	          (column-enforce-mode)
+	          ))
 
 (defun find-root-file (name dir)
   (car
