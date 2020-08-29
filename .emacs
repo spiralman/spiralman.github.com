@@ -269,10 +269,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(flycheck-flake8rc ".flake8")
+ '(frame-background-mode 'dark)
  '(ispell-local-dictionary "en")
  '(package-selected-packages
-   (quote
-    (go-mode web-mode typescript-mode terraform-mode vcl-mode rjsx-mode kotlin-mode dart-mode flycheck graphviz-dot-mode groovy-mode dockerfile-mode nginx-mode yaml-mode web-beautify scss-mode puppet-mode markdown-mode+ less-css-mode js2-mode icicles flymake-easy flymake-cursor ess column-enforce-mode coffee-mode clojurescript-mode clojure-mode actionscript-mode))))
+   '(go-mode web-mode typescript-mode terraform-mode vcl-mode rjsx-mode kotlin-mode dart-mode flycheck graphviz-dot-mode groovy-mode dockerfile-mode nginx-mode yaml-mode web-beautify scss-mode puppet-mode markdown-mode+ less-css-mode js2-mode icicles flymake-easy flymake-cursor ess column-enforce-mode coffee-mode clojurescript-mode clojure-mode actionscript-mode)))
 
 
 (defun replace-random (to-replace)
