@@ -25,6 +25,8 @@
 
 (global-flycheck-mode)
 
+(setq flycheck-python-flake8-executable "python")
+
 ;; (flycheck-add-next-checker 'python-flake8 'python-mypy)
 
 (defun flycheck-list-errors-only-when-errors ()
