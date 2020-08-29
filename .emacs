@@ -4,6 +4,8 @@
 (setq c-default-style "linux"
       c-basic-offset 2)
 
+(setq frame-background-mode 'dark)
+
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.org/packages/"))
 
