@@ -59,6 +59,8 @@ alias sync-minikube='minikube ssh -- sudo date $(date -u +"%m%d%H%M2020.%S")'
 
 alias "sba=source bin/activate"
 
+alias "podme=podman run --mount=type=bind,src=/home/thomasstephens,dst=/home/thomasstephens -it -w $PWD --privileged"
+
 if command -v pyenv 1>/dev/null 2>&1
 then
     eval "$(pyenv init -)"
