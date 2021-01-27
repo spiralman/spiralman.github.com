@@ -48,8 +48,8 @@ mkp()
 auth-gke()
 {
     KUBECTL_CONTEXT=$(kubectl config current-context)
-    gcloud container clusters --zone us-east1-c get-credentials stage-us-east1-c --project ustudio-stage
-    gcloud container clusters --zone us-east1-c get-credentials production-us-east1-c --project ustudio-production
+    gcloud container clusters --region us-east1 get-credentials stage-us-east1-vpc --project ustudio-stage
+    gcloud container clusters --region us-east1 get-credentials production-us-east1-vpc --project ustudio-production
     kubectl config use-context "$KUBECTL_CONTEXT"
 }
 
